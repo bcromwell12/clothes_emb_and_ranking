@@ -1,0 +1,13 @@
+# environments and caches
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# local tooling and private notes
+.claude/
+quince/
+
+# scratch logs from local runs (contain machine paths)
+outputs/rebuild_*.log
+outputs/set_model_run.log

@@ -1,0 +1,107 @@
+sku,name,category,subcategory,price,description
+CSH-001,Mongolian Cashmere Crewneck Sweater,cashmere_sweaters,Women's Sweaters,50.0,"Our bestselling crewneck in Grade-A Mongolian cashmere. Ultra-soft, lightweight, and warm with a relaxed fit that layers effortlessly. Ribbed cuffs, hem, and neckline."
+CSH-002,Mongolian Cashmere V-Neck Sweater,cashmere_sweaters,Women's Sweaters,50.0,A wardrobe staple with a flattering V-neckline. Knit from long-fiber Mongolian cashmere for softness that only improves with wear.
+CSH-003,Mongolian Cashmere Turtleneck Sweater,cashmere_sweaters,Women's Sweaters,60.0,"A fold-over turtleneck with a slim, polished fit. Warm enough to wear alone and thin enough to layer under a blazer or coat."
+CSH-004,Mongolian Cashmere Cardigan Sweater,cashmere_sweaters,Women's Sweaters,70.0,"A classic button-front cardigan with horn-effect buttons and a relaxed silhouette. The easiest layer for office, travel, and weekends."
+CSH-005,Mongolian Cashmere Oversized Boyfriend Sweater,cashmere_sweaters,Women's Sweaters,80.0,"A slouchy, oversized crewneck in a chunkier 7-gauge knit. Dropped shoulders and a longer body for cozy, lived-in style."
+CSH-006,Mongolian Cashmere Cropped Polo Sweater,cashmere_sweaters,Women's Sweaters,65.0,A cropped polo with a soft collar and three-button placket. Pairs perfectly with high-rise trousers and skirts.
+CSH-007,Mongolian Cashmere Fisherman Cable Knit Sweater,cashmere_sweaters,Women's Sweaters,100.0,"A heritage-inspired cable knit made luxurious in heavyweight Mongolian cashmere. Substantial, warm, and built to last for seasons."
+CSH-008,Mongolian Cashmere Mockneck Sweater,cashmere_sweaters,Women's Sweaters,60.0,"A modern mockneck with a slightly cropped, boxy fit. Soft, breathable, and polished enough for any occasion."
+CSH-009,Mongolian Cashmere Sweater Vest,cashmere_sweaters,Women's Sweaters,45.0,A V-neck sweater vest that adds warmth without bulk. Layer over button-downs or wear alone with a tailored trouser.
+CSH-010,Mongolian Cashmere Hoodie,cashmere_sweaters,Women's Sweaters,90.0,"The elevated hoodie. Drawstring hood, kangaroo pocket, and ribbed trims in pure Mongolian cashmere for luxe lounging."
+CSH-011,Mongolian Cashmere Wrap,cashmere_sweaters,Accessories,70.0,An oversized woven wrap that doubles as a travel blanket. Finished with fringed edges and impossibly soft hand-feel.
+CSH-012,Mongolian Cashmere Ribbed Beanie,cashmere_sweaters,Accessories,30.0,"A ribbed beanie with a fold-over cuff. Warm, lightweight, and itch-free for all-day winter wear."
+CSH-013,Men's Mongolian Cashmere Crewneck Sweater,cashmere_sweaters,Men's Sweaters,60.0,A timeless crewneck with a tailored fit through the body and sleeves. Layers cleanly over a collared shirt or tee.
+CSH-014,Men's Mongolian Cashmere V-Neck Sweater,cashmere_sweaters,Men's Sweaters,60.0,"A refined V-neck for workwear and beyond. Lightweight, breathable warmth in fully-fashioned cashmere."
+CSH-015,Men's Mongolian Cashmere Quarter Zip Sweater,cashmere_sweaters,Men's Sweaters,80.0,A quarter-zip pullover with a metal zipper and stand collar. A sharper alternative to the fleece pullover.
+CSH-016,Men's Mongolian Cashmere Shawl Collar Cardigan,cashmere_sweaters,Men's Sweaters,110.0,A heavyweight shawl-collar cardigan with patch pockets and horn buttons. The ultimate weekend layer.
+CSH-017,Men's Mongolian Cashmere Hoodie,cashmere_sweaters,Men's Sweaters,100.0,A relaxed pullover hoodie in pure cashmere. Soft drawstrings and a kangaroo pocket for elevated off-duty style.
+CSH-018,Men's Mongolian Cashmere Turtleneck Sweater,cashmere_sweaters,Men's Sweaters,70.0,"A slim turtleneck that works under a sport coat or on its own. Warm, smooth, and wrinkle-resistant."
+CSH-019,Mongolian Cashmere Jogger Pants,cashmere_sweaters,Lounge,80.0,"Cashmere joggers with an elastic drawstring waist, side pockets, and ribbed cuffs. Pair with the matching hoodie."
+CSH-020,Mongolian Cashmere Touchscreen Gloves,cashmere_sweaters,Accessories,35.0,"Ribbed cashmere gloves with touchscreen-compatible fingertips, so you stay warm without taking them off."
+CLO-001,Organic Cotton Pima Crewneck T-Shirt,clothing,Tops,15.0,"An everyday tee in GOTS-certified organic Pima cotton. Long-staple fibers make it extra soft, durable, and resistant to pilling."
+CLO-002,Washable Stretch Silk Button-Down Shirt,clothing,Tops,60.0,"A 22-momme silk blouse with a touch of stretch. Machine washable, so luxury doesn't come with a dry cleaning bill."
+CLO-003,100% European Linen Wide Leg Pants,clothing,Bottoms,40.0,Breezy wide-leg pants with an elastic back waistband and side pockets. Garment-washed linen softens with every wear.
+CLO-004,Men's 100% European Linen Long Sleeve Shirt,clothing,Men's Tops,40.0,A relaxed button-up in pre-washed European linen. Breathable and naturally temperature-regulating for warm days.
+CLO-005,Comfort Stretch High Rise Straight Jean,clothing,Bottoms,50.0,A high-rise straight jean with just enough stretch for all-day comfort. Holds its shape without bagging out.
+CLO-006,Organic Cotton French Terry Sweatshirt,clothing,Tops,30.0,A midweight crewneck sweatshirt in loopback French terry. Brushed for softness with ribbed cuffs and hem.
+CLO-007,Washable Silk Bias Cut Slip Skirt,clothing,Bottoms,50.0,A fluid bias-cut midi skirt in lustrous silk charmeuse. Elastic waist for easy wear; dress up or down.
+CLO-008,Ultra-Stretch Ponte Straight Leg Pants,clothing,Bottoms,40.0,"Pull-on pants that look tailored and feel like leggings. Wrinkle-resistant ponte with a smooth, flat-front waist."
+CLO-009,Tencel Jersey Midi Dress,clothing,Dresses,40.0,A drapey jersey dress with a scoop neck and midi length. Sustainably sourced Tencel keeps you cool and comfortable.
+CLO-010,Italian Wool Double-Breasted Coat,clothing,Outerwear,200.0,A tailored double-breasted coat cut from Italian-milled wool. Fully lined with welt pockets and a notch lapel.
+CLO-011,100% Leather Moto Jacket,clothing,Outerwear,250.0,"A buttery lambskin moto jacket with asymmetric zip, snap lapels, and zip pockets. An heirloom piece at a fraction of the price."
+CLO-012,Responsible Down Puffer Jacket,clothing,Outerwear,120.0,"A lightweight, packable puffer filled with responsibly sourced 700-fill down. Water-resistant shell for winter days."
+CLO-013,Australian Merino Wool Crewneck Sweater,clothing,Tops,40.0,A fine-gauge merino crewneck that's naturally breathable and odor-resistant. Travels well and resists wrinkles.
+CLO-014,Men's Performance Stretch Chino Pants,clothing,Men's Bottoms,45.0,A slim-straight chino with four-way stretch and a soft brushed finish. Office-ready with weekend-level comfort.
+CLO-015,Men's Organic Cotton Oxford Shirt,clothing,Men's Tops,35.0,A button-down collar Oxford shirt made from GOTS-certified organic cotton. Gets better with every wash.
+CLO-016,Washable Silk Pajama Set,clothing,Sleepwear,100.0,A classic notch-collar silk pajama set with piped trim. Temperature-regulating and machine washable.
+CLO-017,Flowknit High Rise Performance Legging,clothing,Activewear,35.0,"Buttery-soft, squat-proof leggings with a high-rise waistband and hidden pocket. Moisture-wicking for studio or street."
+CLO-018,Recycled Nylon Square Neck One-Piece Swimsuit,clothing,Swim,35.0,A supportive square-neck one-piece with a fully lined body. Made from regenerated nylon and chlorine-resistant.
+CLO-019,Italian Leather Chelsea Boot,clothing,Shoes,130.0,A sleek Chelsea boot crafted from Italian leather with elastic side panels and a lug sole for traction.
+CLO-020,Men's Pima Cotton Pique Polo,clothing,Men's Tops,30.0,A modern-fit polo in breathable Pima cotton pique. Holds its collar shape wash after wash.
+BAG-001,Italian Leather Classic Tote,bags,Totes,150.0,"A structured everyday tote in full-grain Italian leather. Fits a 15"" laptop with an interior zip pocket and magnetic closure."
+BAG-002,Italian Leather Crossbody Bag,bags,Crossbody,80.0,"A compact crossbody with an adjustable strap and gold-tone hardware. Room for phone, wallet, keys, and essentials."
+BAG-003,Italian Leather Mini Crossbody Bag,bags,Crossbody,70.0,A petite crossbody for hands-free nights out. Zip-top closure with a card slot inside.
+BAG-004,Italian Leather Bucket Bag,bags,Shoulder Bags,120.0,A slouchy bucket bag with a drawstring closure and detachable shoulder strap. Unlined for a lightweight feel.
+BAG-005,Italian Leather Hobo Bag,bags,Shoulder Bags,130.0,"A soft, slouchy hobo in buttery nappa leather. Comfortably sits on the shoulder with a roomy main compartment."
+BAG-006,Italian Leather Structured Shoulder Bag,bags,Shoulder Bags,110.0,A polished shoulder bag with a clean silhouette and turn-lock closure. Transitions seamlessly from desk to dinner.
+BAG-007,Italian Leather Everyday Backpack,bags,Backpacks,150.0,"A minimalist leather backpack with a padded laptop sleeve, adjustable straps, and a top grab handle."
+BAG-008,Italian Leather Weekender Duffle Bag,bags,Travel,200.0,"A carry-on-friendly weekender with a separate shoe compartment, detachable strap, and brass hardware."
+BAG-009,Italian Leather Card Case,bags,Small Leather Goods,25.0,A slim card case with four card slots and a center pocket. Fits easily in a front pocket or small bag.
+BAG-010,Italian Leather Zip Around Wallet,bags,Small Leather Goods,50.0,"A full-size wallet with 12 card slots, two bill compartments, and a zip coin pocket."
+BAG-011,Italian Leather Belt Bag,bags,Crossbody,60.0,A versatile belt bag that wears at the waist or across the body. Adjustable strap and front zip pocket.
+BAG-012,Italian Leather Woven Tote,bags,Totes,180.0,"A hand-woven leather tote made by artisans in Italy. Soft, sculptural, and roomy enough for daily carry."
+BAG-013,Italian Leather Laptop Briefcase,bags,Work,170.0,"A slim briefcase with a padded 16"" laptop compartment, organizer pockets, and detachable shoulder strap."
+BAG-014,Italian Leather Evening Clutch,bags,Clutches,60.0,"A sleek envelope clutch with an optional chain strap. Sized for phone, cards, and lipstick."
+BAG-015,Recycled Nylon Packable Travel Tote,bags,Travel,40.0,"A lightweight, water-resistant tote that folds into its own pocket. Leather handles add a refined touch."
+BAG-016,Organic Cotton Canvas Tote,bags,Totes,30.0,"A heavyweight canvas tote for groceries, beach days, and errands. Interior pocket and reinforced base."
+BAG-017,Italian Leather Saddle Bag,bags,Crossbody,120.0,A curved saddle bag in vegetable-tanned leather that develops a rich patina over time.
+BAG-018,Handwoven Straw Market Tote,bags,Totes,50.0,A handwoven market tote for summer. Durable raffia with soft leather handles and a cotton drawstring liner.
+BAG-019,Italian Leather Dopp Kit,bags,Travel,50.0,A structured toiletry bag with a wipeable lining and wide zip opening for easy packing.
+BAG-020,Italian Leather Phone Crossbody,bags,Crossbody,50.0,A minimalist phone bag with an exterior card slot and adjustable crossbody strap. Fits most large phones.
+HOM-001,100% European Linen Duvet Cover Set,furniture_bed,Bedding,120.0,"Stone-washed linen duvet cover with two matching shams. Breathable, temperature-regulating, and softer with every wash."
+HOM-002,Organic Percale Sheet Set,furniture_bed,Bedding,90.0,"Crisp, cool percale sheets in long-staple organic cotton. Set includes flat sheet, fitted sheet, and two pillowcases."
+HOM-003,Bamboo Lyocell Sheet Set,furniture_bed,Bedding,110.0,"Silky, cooling sheets ideal for hot sleepers. Moisture-wicking bamboo lyocell with deep-pocket fitted sheet."
+HOM-004,Organic Sateen Sheet Set,furniture_bed,Bedding,100.0,"Smooth, lustrous sateen with a subtle sheen. Woven from long-staple organic cotton for a hotel-quality feel."
+HOM-005,Down Alternative Comforter,furniture_bed,Bedding,120.0,A lofty all-season comforter with box-stitch construction to prevent shifting. Hypoallergenic and machine washable.
+HOM-006,European White Down Comforter,furniture_bed,Bedding,200.0,Cloud-like warmth from responsibly sourced European down. Baffle-box construction keeps fill evenly distributed.
+HOM-007,100% European Linen Quilt,furniture_bed,Bedding,150.0,A lightweight quilt with channel stitching. Perfect alone in summer or layered over a duvet in winter.
+HOM-008,Turkish Cotton Bath Towel Set,furniture_bed,Bath,50.0,"Plush, absorbent towels woven in Turkey from long-staple cotton. Gets fluffier with every wash."
+HOM-009,Organic Cotton Waffle Knit Blanket,furniture_bed,Throws & Blankets,80.0,"A breathable waffle-weave blanket for year-round layering. Textured, lightweight, and naturally soft."
+HOM-010,European White Down Pillow,furniture_bed,Pillows,60.0,A medium-firm down pillow that cradles your head and neck. Available in standard and king sizes.
+HOM-011,Solid Oak Bed Frame,furniture_bed,Furniture,900.0,A minimalist platform bed crafted from solid white oak. No box spring needed; assembles in under 30 minutes.
+HOM-012,Solid Wood Two-Drawer Nightstand,furniture_bed,Furniture,300.0,A compact nightstand with two soft-close drawers and a clean mid-century profile.
+HOM-013,Performance Linen Upholstered Platform Bed,furniture_bed,Furniture,1100.0,A tailored upholstered bed with a padded headboard in stain-resistant performance linen.
+HOM-014,Performance Linen Three-Seat Sofa,furniture_bed,Furniture,1500.0,A deep-seated sofa with feather-wrapped cushions and stain-resistant performance fabric. Built to sink into.
+HOM-015,Italian Leather Lounge Chair,furniture_bed,Furniture,900.0,A low-slung lounge chair in full-grain Italian leather that patinas beautifully over time.
+HOM-016,Marble Round Side Table,furniture_bed,Furniture,250.0,A sculptural pedestal side table carved from solid marble. Every piece has unique natural veining.
+HOM-017,Solid Oak Dining Table,furniture_bed,Furniture,1200.0,A timeless dining table in solid white oak that seats six to eight. Finished to resist water and stains.
+HOM-018,Handwoven Jute Area Rug,furniture_bed,Rugs,150.0,A chunky handwoven jute rug that adds texture and warmth. Durable enough for high-traffic areas.
+HOM-019,Hand-Knotted Wool Area Rug,furniture_bed,Rugs,400.0,A hand-knotted wool rug with a subtle tonal pattern. Naturally stain-resistant and incredibly soft underfoot.
+HOM-020,Handmade Ceramic Table Lamp,furniture_bed,Lighting,100.0,A handmade ceramic lamp with a reactive glaze and natural linen shade. Each base is one of a kind.
+JWL-001,14K Gold Huggie Hoop Earrings,jewelry,Earrings,50.0,Everyday huggie hoops in solid 14K gold. Hinged closure for easy on and off; comfortable enough to sleep in.
+JWL-002,14K Gold Paperclip Chain Necklace,jewelry,Necklaces,150.0,A modern paperclip-link chain in solid 14K gold. Wear alone or layer with pendants.
+JWL-003,Lab Grown Diamond Stud Earrings,jewelry,Earrings,200.0,"Brilliant-cut lab grown diamond studs in a four-prong basket setting. Chemically identical to mined diamonds, IGI-certified."
+JWL-004,Lab Grown Diamond Tennis Bracelet,jewelry,Bracelets,1000.0,A classic tennis bracelet set with round brilliant lab grown diamonds and a secure box clasp.
+JWL-005,Freshwater Pearl Stud Earrings,jewelry,Earrings,30.0,Lustrous freshwater pearl studs on solid 14K gold posts. A timeless finishing touch.
+JWL-006,Freshwater Pearl Strand Necklace,jewelry,Necklaces,100.0,A hand-knotted strand of round freshwater pearls with a 14K gold clasp. An heirloom-worthy classic.
+JWL-007,14K Gold Oval Signet Ring,jewelry,Rings,200.0,A polished oval signet ring with a substantial weight. Ready for engraving or to wear as-is.
+JWL-008,Sterling Silver Chunky Hoop Earrings,jewelry,Earrings,40.0,"Bold, lightweight tube hoops in recycled 925 sterling silver. Hollow construction for all-day comfort."
+JWL-009,Gold Vermeil Herringbone Necklace,jewelry,Necklaces,60.0,"A sleek, liquid-like herringbone chain in thick 18K gold vermeil. Lies flat and catches the light beautifully."
+JWL-010,Lab Grown Diamond Solitaire Pendant,jewelry,Necklaces,300.0,"A single round lab grown diamond suspended on a delicate cable chain. Simple, elegant, everyday sparkle."
+JWL-011,Lab Grown Diamond Eternity Band,jewelry,Rings,600.0,A full eternity band with shared-prong round lab grown diamonds. Ideal as a wedding band or stacking ring.
+JWL-012,14K Gold Initial Pendant Necklace,jewelry,Necklaces,100.0,A personalized initial pendant on a fine cable chain. Choose any letter A-Z at checkout.
+JWL-013,Sterling Silver Sculptural Cuff Bracelet,jewelry,Bracelets,50.0,An organically shaped open cuff with a high-polish finish. Slightly adjustable for a comfortable fit.
+JWL-014,14K Gold Bead Bracelet,jewelry,Bracelets,90.0,Delicate polished gold beads on a fine chain. Perfect for stacking or wearing solo.
+JWL-015,Freshwater Pearl Drop Earrings,jewelry,Earrings,40.0,"Baroque pearl drops on gold vermeil huggies. Each pearl is uniquely shaped for an organic, modern look."
+JWL-016,Lab Grown Emerald Cocktail Ring,jewelry,Rings,400.0,An emerald-cut lab grown emerald framed in a halo of lab grown diamonds. Rich color without the mined markup.
+JWL-017,14K Gold Rope Chain Necklace,jewelry,Necklaces,250.0,A twisted rope chain in solid 14K gold that catches light from every angle. Lobster clasp closure.
+JWL-018,Gold Vermeil Stacking Ring Set,jewelry,Rings,50.0,"A set of three stackable rings: one smooth, one twisted, one beaded. Wear together or mix and match."
+JWL-019,Lab Grown Diamond Bezel Station Necklace,jewelry,Necklaces,350.0,"Five bezel-set lab grown diamonds spaced along a fine chain for an effortless, scattered sparkle."
+JWL-020,Men's Sterling Silver Curb Chain Necklace,jewelry,Men's Jewelry,80.0,A substantial 5mm curb chain in polished sterling silver. Secure lobster clasp; tarnish-resistant finish.
+JWL-021,Sterling Silver Jade Pendant Necklace,jewelry,Necklaces,90.0,A smooth oval of natural nephrite jade in a sterling silver bezel on a fine cable chain. Each stone's green varies slightly.
+JWL-022,Lab Grown Ruby Sterling Silver Ring,jewelry,Rings,120.0,"An oval lab grown ruby in a four-prong sterling silver setting. Deep red color, chemically identical to mined ruby."
+JWL-023,Sterling Silver Onyx Stud Earrings,jewelry,Earrings,45.0,"Round black onyx cabochons in polished sterling silver settings. A graphic, everyday alternative to diamond studs."
+JWL-024,Sterling Silver Turquoise Cuff Bracelet,jewelry,Bracelets,110.0,A hammered sterling silver cuff set with a single stabilized turquoise stone. Open back for an adjustable fit.
+JWL-025,Men's Stainless Steel ID Bracelet,jewelry,Men's Jewelry,45.0,"A brushed stainless steel ID bracelet with a flat engravable plate. Waterproof, scratch-resistant, and won't tarnish."
+JWL-026,Stainless Steel Everyday Hoop Earrings,jewelry,Earrings,30.0,"Lightweight tube hoops in hypoallergenic stainless steel. Shower-, sweat-, and swim-proof for true everyday wear."

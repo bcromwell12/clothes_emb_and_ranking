@@ -1,0 +1,34 @@
+λ = 0.6.  Intents: lounge (7), cold (14), travel (6), bedding (9), earrings (7), necklaces (10), diamond (6), leather (20), furniture (10), mens (12), sweaters (16)
+
+1. Wedding session (hand labels; B-D partly circular, see docstring)
+   variant                outfit@10 linen-home@10   top 3 for 'summer wedding guest outfit'
+   A baseline (MPNet)           16%           10%   Washable Silk Pajama Set | Tencel Jersey Midi Dress | Washable Silk Bias Cut Slip Skirt
+   B + attributes               24%           14%   Washable Silk Bias Cut Slip Skirt | Men's 100% European Linen Long Sleeve Shirt | Tencel Jersey Midi Dress
+   C + BGE                      18%            6%   Tencel Jersey Midi Dress | Washable Silk Bias Cut Slip Skirt | Sterling Silver Turquoise Cuff Bracelet
+   D + cross-encoder            24%            6%   100% European Linen Wide Leg Pants | Men's 100% European Linen Long Sleeve Shirt | Washable Silk Bias Cut Slip Skirt
+   E set model                  18%            4%   Recycled Nylon Square Neck One-Piece Swimsuit | 100% European Linen Wide Leg Pants | Stainless Steel Everyday Hoop Earrings
+
+2. Many sessions (11 intents × 10 sessions × 5 shoppers), taxonomy labels
+   no session at all: next-click hit@10 13%
+   variant                 hit@10    MRR  query recall@10
+   A baseline (MPNet)         61%  0.151              76%
+   B + attributes             62%  0.153              74%
+   C + BGE                    64%  0.152              80%
+   D + cross-encoder          66%  0.152              89%
+   E set model                59%  0.136              74%
+
+   next-click hit@10 by intent
+   intent          A     B     C     D     E
+   lounge        28%   26%   18%   52%   32%
+   cold          48%   50%   54%   56%   48%
+   travel        36%   36%   64%   74%   86%
+   bedding       78%   78%   80%   70%   26%
+   earrings      96%   98%   92%   94%  100%
+   necklaces     60%   72%   78%   80%   74%
+   diamond       98%   98%   98%   98%   82%
+   leather       40%   40%   40%   44%   32%
+   furniture     58%   58%   66%   56%   76%
+   mens          76%   70%   66%   64%   40%
+   sweaters      54%   54%   52%   38%   58%
+
+Cross-encoder latency, 30 pairs on this laptop's CPU: 17 ms per search (runs once at search time, not per page load)

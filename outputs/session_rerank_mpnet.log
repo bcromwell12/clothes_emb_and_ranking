@@ -1,0 +1,100 @@
+Encoder: mpnet.  Nearest items to each anchor:
+  click  CLO-004 Men's 100% European Line (0.86), CLO-003 100% European Linen Wide (0.86), HOM-007 100% European Linen Quil (0.70), CLO-002 Washable Stretch Silk Bu (0.68), HOM-001 100% European Linen Duve (0.66), CLO-007 Washable Silk Bias Cut S (0.65)
+  query  CLO-016 Washable Silk Pajama Set (0.32), CLO-009 Tencel Jersey Midi Dress (0.31), CLO-007 Washable Silk Bias Cut S (0.30), CLO-004 Men's 100% European Line (0.30), CLO-020 Men's Pima Cotton Pique  (0.28), CSH-006 Mongolian Cashmere Cropp (0.27)
+
+=== cashmere loyalist ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  CSH-007 Mongolian Cashmere Fisherman Cable Kni     CSH-007 Mongolian Cashmere Fisherman Cable Kni   [query]
+  CSH-008 Mongolian Cashmere Mockneck Sweater        CSH-008 Mongolian Cashmere Mockneck Sweater      [query]
+  CSH-019 Mongolian Cashmere Jogger Pants           *CLO-002 Washable Stretch Silk Button-Down Shir   [click]
+  CSH-020 Mongolian Cashmere Touchscreen Gloves      CLO-016 Washable Silk Pajama Set                 [query]
+  CSH-003 Mongolian Cashmere Turtleneck Sweater      CSH-006 Mongolian Cashmere Cropped Polo Sweate   [query]
+  CSH-009 Mongolian Cashmere Sweater Vest           *CLO-020 Men's Pima Cotton Pique Polo             [query]
+  CSH-018 Men's Mongolian Cashmere Turtleneck Sw     CSH-016 Men's Mongolian Cashmere Shawl Collar    [query]
+  CSH-005 Mongolian Cashmere Oversized Boyfriend     CSH-019 Mongolian Cashmere Jogger Pants          [query]
+  CSH-014 Men's Mongolian Cashmere V-Neck Sweate     CSH-005 Mongolian Cashmere Oversized Boyfriend   [query]
+  CSH-011 Mongolian Cashmere Wrap                    CSH-017 Men's Mongolian Cashmere Hoodie          [query]
+
+=== home nester ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  HOM-005 Down Alternative Comforter                 HOM-005 Down Alternative Comforter               [query]
+  HOM-015 Italian Leather Lounge Chair               HOM-015 Italian Leather Lounge Chair             [query]
+  HOM-016 Marble Round Side Table                   !HOM-001 100% European Linen Duvet Cover Set      [query]
+  HOM-019 Hand-Knotted Wool Area Rug                !HOM-014 Performance Linen Three-Seat Sofa        [query]
+  HOM-017 Solid Oak Dining Table                    !HOM-007 100% European Linen Quilt                [query]
+  HOM-002 Organic Percale Sheet Set                  HOM-004 Organic Sateen Sheet Set                 [query]
+  HOM-001 100% European Linen Duvet Cover Set       !HOM-013 Performance Linen Upholstered Platform   [query]
+  HOM-003 Bamboo Lyocell Sheet Set                   HOM-002 Organic Percale Sheet Set                [query]
+  HOM-018 Handwoven Jute Area Rug                    CLO-016 Washable Silk Pajama Set                 [query]
+  HOM-006 European White Down Comforter              HOM-006 European White Down Comforter            [query]
+
+=== jewelry gifter ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  JWL-026 Stainless Steel Everyday Hoop Earrings     JWL-026 Stainless Steel Everyday Hoop Earrings   [query]
+  JWL-025 Men's Stainless Steel ID Bracelet          JWL-025 Men's Stainless Steel ID Bracelet        [query]
+  JWL-009 Gold Vermeil Herringbone Necklace         *CLO-002 Washable Stretch Silk Button-Down Shir   [click]
+  JWL-003 Lab Grown Diamond Stud Earrings            CLO-016 Washable Silk Pajama Set                 [query]
+  JWL-016 Lab Grown Emerald Cocktail Ring            JWL-009 Gold Vermeil Herringbone Necklace        [query]
+  JWL-004 Lab Grown Diamond Tennis Bracelet          JWL-016 Lab Grown Emerald Cocktail Ring          [query]
+  JWL-008 Sterling Silver Chunky Hoop Earrings       JWL-017 14K Gold Rope Chain Necklace             [query]
+  JWL-013 Sterling Silver Sculptural Cuff Bracel    *CLO-020 Men's Pima Cotton Pique Polo             [query]
+  JWL-019 Lab Grown Diamond Bezel Station Neckla     JWL-018 Gold Vermeil Stacking Ring Set           [query]
+  JWL-024 Sterling Silver Turquoise Cuff Bracele     CSH-006 Mongolian Cashmere Cropped Polo Sweate   [query]
+
+=== bag buyer ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  BAG-002 Italian Leather Crossbody Bag              BAG-002 Italian Leather Crossbody Bag            [query]
+  BAG-017 Italian Leather Saddle Bag                 BAG-017 Italian Leather Saddle Bag               [query]
+  BAG-014 Italian Leather Evening Clutch            *CLO-002 Washable Stretch Silk Button-Down Shir   [click]
+  BAG-003 Italian Leather Mini Crossbody Bag         CLO-016 Washable Silk Pajama Set                 [query]
+  BAG-013 Italian Leather Laptop Briefcase          *CLO-020 Men's Pima Cotton Pique Polo             [query]
+  BAG-001 Italian Leather Classic Tote               BAG-008 Italian Leather Weekender Duffle Bag     [query]
+  BAG-005 Italian Leather Hobo Bag                   CLO-006 Organic Cotton French Terry Sweatshirt   [query]
+  BAG-015 Recycled Nylon Packable Travel Tote        CLO-008 Ultra-Stretch Ponte Straight Leg Pants   [query]
+  BAG-006 Italian Leather Structured Shoulder Ba     CSH-006 Mongolian Cashmere Cropped Polo Sweate   [query]
+  BAG-011 Italian Leather Belt Bag                   CLO-005 Comfort Stretch High Rise Straight Jea   [click]
+
+=== cold start ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  JWL-004 Lab Grown Diamond Tennis Bracelet          JWL-004 Lab Grown Diamond Tennis Bracelet        [query]
+  CSH-016 Men's Mongolian Cashmere Shawl Collar      CSH-016 Men's Mongolian Cashmere Shawl Collar    [query]
+  BAG-002 Italian Leather Crossbody Bag             *CLO-002 Washable Stretch Silk Button-Down Shir   [click]
+  HOM-003 Bamboo Lyocell Sheet Set                  *CLO-020 Men's Pima Cotton Pique Polo             [query]
+  JWL-019 Lab Grown Diamond Bezel Station Neckla     CLO-005 Comfort Stretch High Rise Straight Jea   [click]
+  BAG-018 Handwoven Straw Market Tote               !HOM-001 100% European Linen Duvet Cover Set      [query]
+  CLO-005 Comfort Stretch High Rise Straight Jea     CLO-016 Washable Silk Pajama Set                 [query]
+  CSH-003 Mongolian Cashmere Turtleneck Sweater      CLO-008 Ultra-Stretch Ponte Straight Leg Pants   [query]
+  JWL-025 Men's Stainless Steel ID Bracelet          CSH-012 Mongolian Cashmere Ribbed Beanie         [query]
+  CSH-018 Men's Mongolian Cashmere Turtleneck Sw     CSH-006 Mongolian Cashmere Cropped Polo Sweate   [query]
+
+* = hand-labeled outfit item, ! = linen home item (material match, wrong intent)
+
+shopper            outfit@10 before  after  linen-home before  after
+cashmere loyalist                0%    20%                 0%     0%
+home nester                      0%     0%                10%    40%
+jewelry gifter                  10%    20%                 0%     0%
+bag buyer                       10%    20%                 0%     0%
+cold start                      10%    20%                 0%    10%
+
+Row overlap across shoppers (mean pairwise Jaccard): before 0.04, after 0.20
+Category mix after rerank:
+  cashmere loyalist  CSH:7  CLO:3
+  home nester        CLO:1  HOM:9
+  jewelry gifter     CSH:1  CLO:3  JWL:6
+  bag buyer          CSH:1  CLO:6  BAG:3
+  cold start         CSH:3  CLO:5  HOM:1  JWL:1
+
+Variant comparison (mean over shoppers): outfit@10 / linen-home@10 / rows steered by query anchor
+  raw      outfit  14%   linen-home  20%   query-anchor slots   0%
+  zscore   outfit  16%   linen-home  12%   query-anchor slots  60%
+  guarded  outfit  16%   linen-home  10%   query-anchor slots  88%
+
+Mode: guarded.  Placebo session ('home office storage' + oak bed / briefcase clicks): outfit@10 after = 0% (real session: 16%)
+
+λ sweep (session weight): mean outfit@10 / mean overlap with original shortlist / cross-shopper Jaccard
+  λ=0.0  outfit   6%   kept 100%   jaccard 0.04
+  λ=0.2  outfit   8%   kept  78%   jaccard 0.03
+  λ=0.4  outfit  16%   kept  56%   jaccard 0.04
+  λ=0.6  outfit  16%   kept  36%   jaccard 0.20
+  λ=0.8  outfit  20%   kept  26%   jaccard 0.44
+  λ=1.0  outfit  20%   kept  22%   jaccard 0.67

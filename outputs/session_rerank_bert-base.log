@@ -1,0 +1,113 @@
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Encoder: bert-base.  Nearest items to each anchor:
+  click  CLO-003 100% European Linen Wide (0.96), CLO-004 Men's 100% European Line (0.95), CLO-009 Tencel Jersey Midi Dress (0.93), CLO-007 Washable Silk Bias Cut S (0.92), CSH-009 Mongolian Cashmere Sweat (0.92), CSH-006 Mongolian Cashmere Cropp (0.91)
+  query  JWL-012 14K Gold Initial Pendant (0.60), JWL-011 Lab Grown Diamond Eterni (0.59), JWL-017 14K Gold Rope Chain Neck (0.58), HOM-001 100% European Linen Duve (0.57), HOM-006 European White Down Comf (0.57), BAG-003 Italian Leather Mini Cro (0.56)
+
+=== cashmere loyalist ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  CSH-007 Mongolian Cashmere Fisherman Cable Kni     CSH-007 Mongolian Cashmere Fisherman Cable Kni   [query]
+  CSH-008 Mongolian Cashmere Mockneck Sweater        CSH-008 Mongolian Cashmere Mockneck Sweater      [query]
+  CSH-019 Mongolian Cashmere Jogger Pants            JWL-012 14K Gold Initial Pendant Necklace        [query]
+  CSH-020 Mongolian Cashmere Touchscreen Gloves      CSH-004 Mongolian Cashmere Cardigan Sweater      [query]
+  CSH-003 Mongolian Cashmere Turtleneck Sweater     *CLO-002 Washable Stretch Silk Button-Down Shir   [query]
+  CSH-009 Mongolian Cashmere Sweater Vest            CSH-010 Mongolian Cashmere Hoodie                [query]
+  CSH-018 Men's Mongolian Cashmere Turtleneck Sw     CLO-006 Organic Cotton French Terry Sweatshirt   [click]
+  CSH-005 Mongolian Cashmere Oversized Boyfriend     BAG-003 Italian Leather Mini Crossbody Bag       [query]
+  CSH-014 Men's Mongolian Cashmere V-Neck Sweate     JWL-011 Lab Grown Diamond Eternity Band          [query]
+  CSH-011 Mongolian Cashmere Wrap                    CSH-005 Mongolian Cashmere Oversized Boyfriend   [query]
+
+=== home nester ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  HOM-005 Down Alternative Comforter                 HOM-005 Down Alternative Comforter               [query]
+  HOM-015 Italian Leather Lounge Chair               HOM-015 Italian Leather Lounge Chair             [query]
+  HOM-016 Marble Round Side Table                   !HOM-001 100% European Linen Duvet Cover Set      [query]
+  HOM-019 Hand-Knotted Wool Area Rug                 JWL-012 14K Gold Initial Pendant Necklace        [query]
+  HOM-017 Solid Oak Dining Table                     HOM-006 European White Down Comforter            [query]
+  HOM-002 Organic Percale Sheet Set                  JWL-011 Lab Grown Diamond Eternity Band          [query]
+  HOM-001 100% European Linen Duvet Cover Set        JWL-017 14K Gold Rope Chain Necklace             [query]
+  HOM-003 Bamboo Lyocell Sheet Set                  !HOM-007 100% European Linen Quilt                [query]
+  HOM-018 Handwoven Jute Area Rug                    HOM-010 European White Down Pillow               [query]
+  HOM-006 European White Down Comforter              BAG-003 Italian Leather Mini Crossbody Bag       [query]
+
+=== jewelry gifter ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  JWL-026 Stainless Steel Everyday Hoop Earrings     JWL-026 Stainless Steel Everyday Hoop Earrings   [query]
+  JWL-025 Men's Stainless Steel ID Bracelet          JWL-025 Men's Stainless Steel ID Bracelet        [query]
+  JWL-009 Gold Vermeil Herringbone Necklace          JWL-012 14K Gold Initial Pendant Necklace        [query]
+  JWL-003 Lab Grown Diamond Stud Earrings            JWL-011 Lab Grown Diamond Eternity Band          [query]
+  JWL-016 Lab Grown Emerald Cocktail Ring            JWL-017 14K Gold Rope Chain Necklace             [query]
+  JWL-004 Lab Grown Diamond Tennis Bracelet          JWL-014 14K Gold Bead Bracelet                   [query]
+  JWL-008 Sterling Silver Chunky Hoop Earrings       JWL-016 Lab Grown Emerald Cocktail Ring          [query]
+  JWL-013 Sterling Silver Sculptural Cuff Bracel     JWL-018 Gold Vermeil Stacking Ring Set           [query]
+  JWL-019 Lab Grown Diamond Bezel Station Neckla    *JWL-015 Freshwater Pearl Drop Earrings           [query]
+  JWL-024 Sterling Silver Turquoise Cuff Bracele     JWL-004 Lab Grown Diamond Tennis Bracelet        [query]
+
+=== bag buyer ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  BAG-002 Italian Leather Crossbody Bag              BAG-002 Italian Leather Crossbody Bag            [query]
+  BAG-017 Italian Leather Saddle Bag                 BAG-017 Italian Leather Saddle Bag               [query]
+  BAG-014 Italian Leather Evening Clutch             BAG-003 Italian Leather Mini Crossbody Bag       [query]
+  BAG-003 Italian Leather Mini Crossbody Bag         BAG-006 Italian Leather Structured Shoulder Ba   [query]
+  BAG-013 Italian Leather Laptop Briefcase           JWL-012 14K Gold Initial Pendant Necklace        [query]
+  BAG-001 Italian Leather Classic Tote               BAG-016 Organic Cotton Canvas Tote               [query]
+  BAG-005 Italian Leather Hobo Bag                  *CLO-002 Washable Stretch Silk Button-Down Shir   [query]
+  BAG-015 Recycled Nylon Packable Travel Tote        BAG-015 Recycled Nylon Packable Travel Tote      [query]
+  BAG-006 Italian Leather Structured Shoulder Ba    *BAG-014 Italian Leather Evening Clutch           [query]
+  BAG-011 Italian Leather Belt Bag                   JWL-011 Lab Grown Diamond Eternity Band          [query]
+
+=== cold start ===
+  before (offline shortlist)                       after (session rerank, λ=0.6)
+  JWL-004 Lab Grown Diamond Tennis Bracelet          JWL-004 Lab Grown Diamond Tennis Bracelet        [query]
+  CSH-016 Men's Mongolian Cashmere Shawl Collar      CSH-016 Men's Mongolian Cashmere Shawl Collar    [query]
+  BAG-002 Italian Leather Crossbody Bag             !HOM-001 100% European Linen Duvet Cover Set      [query]
+  HOM-003 Bamboo Lyocell Sheet Set                   JWL-012 14K Gold Initial Pendant Necklace        [query]
+  JWL-019 Lab Grown Diamond Bezel Station Neckla     BAG-003 Italian Leather Mini Crossbody Bag       [query]
+  BAG-018 Handwoven Straw Market Tote                HOM-006 European White Down Comforter            [query]
+  CLO-005 Comfort Stretch High Rise Straight Jea    *CLO-002 Washable Stretch Silk Button-Down Shir   [query]
+  CSH-003 Mongolian Cashmere Turtleneck Sweater      JWL-018 Gold Vermeil Stacking Ring Set           [query]
+  JWL-025 Men's Stainless Steel ID Bracelet         *CLO-014 Men's Performance Stretch Chino Pants    [click]
+  CSH-018 Men's Mongolian Cashmere Turtleneck Sw     CSH-010 Mongolian Cashmere Hoodie                [query]
+
+* = hand-labeled outfit item, ! = linen home item (material match, wrong intent)
+
+shopper            outfit@10 before  after  linen-home before  after
+cashmere loyalist                0%    10%                 0%     0%
+home nester                      0%     0%                10%    20%
+jewelry gifter                  10%    10%                 0%     0%
+bag buyer                       10%    20%                 0%     0%
+cold start                      10%    20%                 0%    10%
+
+Row overlap across shoppers (mean pairwise Jaccard): before 0.04, after 0.19
+Category mix after rerank:
+  cashmere loyalist  CSH:5  CLO:2  BAG:1  JWL:2
+  home nester        BAG:1  HOM:6  JWL:3
+  jewelry gifter     JWL:10
+  bag buyer          CLO:1  BAG:7  JWL:2
+  cold start         CSH:2  CLO:2  BAG:1  HOM:2  JWL:3
+
+Variant comparison (mean over shoppers): outfit@10 / linen-home@10 / rows steered by query anchor
+  raw      outfit  14%   linen-home   4%   query-anchor slots   0%
+  zscore   outfit   8%   linen-home   6%   query-anchor slots  72%
+  guarded  outfit  12%   linen-home   6%   query-anchor slots  96%
+
+Mode: guarded.  Placebo session ('home office storage' + oak bed / briefcase clicks): outfit@10 after = 2% (real session: 12%)
+
+λ sweep (session weight): mean outfit@10 / mean overlap with original shortlist / cross-shopper Jaccard
+  λ=0.0  outfit   6%   kept 100%   jaccard 0.04
+  λ=0.2  outfit   4%   kept  76%   jaccard 0.04
+  λ=0.4  outfit  10%   kept  58%   jaccard 0.04
+  λ=0.6  outfit  12%   kept  38%   jaccard 0.19
+  λ=0.8  outfit  14%   kept  28%   jaccard 0.46
+  λ=1.0  outfit  10%   kept  26%   jaccard 0.67

@@ -1,0 +1,1749 @@
+<meta charset="utf-8">
+<title>Quince Embedding Explorer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: control bar over a two-pane workspace (map | product detail), diagnostics row below. */
+:root {
+  --bg: #f3f4f2;
+  --surface: #ffffff;
+  --ink: #1d2320;
+  --muted: #5f6a64;
+  --line: #d9ddd9;
+  --accent: #2f5d50;
+  --dot-muted: #cfd5d1;
+  --danger: #b3261e;
+
+  --cat-cashmere_sweaters: #b8466a;
+  --cat-clothing: #3c6cab;
+  --cat-bags: #95622f;
+  --cat-furniture_bed: #3f8455;
+  --cat-jewelry: #c08f12;
+
+  --k0: #3c6cab; --k1: #d0743c; --k2: #3f8455; --k3: #b8466a; --k4: #7a5bb0;
+  --k5: #2a9a9a; --k6: #95622f; --k7: #c08f12; --k8: #5f6a64; --k9: #c94f4f; --k10: #6f8f2a; --k11: #3d4f8f;
+
+  --font-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131715; --surface: #1b201d; --ink: #e6ebe7; --muted: #9aa59f; --line: #2d3430;
+    --accent: #7cc0a8; --dot-muted: #3a423e; --danger: #f2a29b;
+    --cat-cashmere_sweaters: #e27a9b; --cat-clothing: #74a3e0; --cat-bags: #cf9a62;
+    --cat-furniture_bed: #6fc08a; --cat-jewelry: #e8bd4a;
+    --k0: #74a3e0; --k1: #ec9a63; --k2: #6fc08a; --k3: #e27a9b; --k4: #a98ae0;
+    --k5: #5cc8c8; --k6: #cf9a62; --k7: #e8bd4a; --k8: #9aa59f; --k9: #ec7b7b; --k10: #a6c45a; --k11: #8597dd;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131715; --surface: #1b201d; --ink: #e6ebe7; --muted: #9aa59f; --line: #2d3430;
+  --accent: #7cc0a8; --dot-muted: #3a423e; --danger: #f2a29b;
+  --cat-cashmere_sweaters: #e27a9b; --cat-clothing: #74a3e0; --cat-bags: #cf9a62;
+  --cat-furniture_bed: #6fc08a; --cat-jewelry: #e8bd4a;
+  --k0: #74a3e0; --k1: #ec9a63; --k2: #6fc08a; --k3: #e27a9b; --k4: #a98ae0;
+  --k5: #5cc8c8; --k6: #cf9a62; --k7: #e8bd4a; --k8: #9aa59f; --k9: #ec7b7b; --k10: #a6c45a; --k11: #8597dd;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.page {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding-block: 28px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid;
+  gap: 20px;
+}
+
+header { display: grid; gap: 6px; }
+h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(26px, 3.4vw, 36px);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin: 0;
+  text-wrap: balance;
+}
+.lede { margin: 0; color: var(--muted); max-width: 72ch; }
+.lede code { font-family: var(--font-mono); font-size: 12.5px; }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  align-items: end;
+}
+.control { display: grid; gap: 6px; }
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 3px;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+.seg button {
+  font: inherit;
+  font-size: 13px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.seg button:hover { color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); font-weight: 500; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+#search {
+  font: inherit;
+  font-size: 13px;
+  width: min(300px, 100%);
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+}
+.control.grow { flex: 1 1 220px; min-width: 0; }
+
+.query {
+  display: grid;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.query form { display: flex; flex-wrap: wrap; gap: 10px; }
+#q {
+  flex: 1 1 260px;
+  min-width: 0;
+  font: inherit;
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--ink);
+}
+.primary {
+  font: inherit;
+  font-weight: 500;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--surface);
+  cursor: pointer;
+}
+.primary:disabled, #q:disabled, .pill:disabled { opacity: 0.5; cursor: not-allowed; }
+.qrow { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; font-size: 12.5px; color: var(--muted); }
+.pill {
+  font: inherit;
+  font-size: 12.5px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 4px 10px;
+  cursor: pointer;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pill[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); font-weight: 500; }
+#qstatus { margin: 0; font-size: 12.5px; color: var(--muted); }
+#qstatus.err { color: var(--danger); }
+#qstatus code { font-family: var(--font-mono); font-size: 12px; }
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  font-size: 13px;
+  color: var(--muted);
+  border-block: 1px solid var(--line);
+  padding-block: 10px;
+}
+.stats b {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) { .workspace { grid-template-columns: minmax(0, 1fr); } }
+
+.map-wrap {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+#map { display: block; width: 100%; height: auto; aspect-ratio: 10 / 8; max-width: 100%; }
+#map .dot {
+  stroke: var(--surface);
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: transform 600ms cubic-bezier(.2,.7,.2,1);
+}
+#map .dot.dim { opacity: 0.35; }
+#map .dot.match { stroke: var(--ink); stroke-width: 2.5; }
+#map .ring { fill: none; stroke: var(--ink); stroke-width: 2; pointer-events: none; transition: transform 600ms cubic-bezier(.2,.7,.2,1); }
+#map .qmark {
+  fill: var(--surface);
+  stroke: var(--accent);
+  stroke-width: 3;
+  cursor: pointer;
+  transition: transform 600ms cubic-bezier(.2,.7,.2,1);
+}
+#map .qmark.on { fill: var(--accent); stroke: var(--ink); }
+#map .edge { stroke: var(--ink); stroke-opacity: 0.28; stroke-width: 1.2; pointer-events: none; }
+#map .tag {
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 600;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 6px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.swatch { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.ramp { width: 120px; height: 10px; border-radius: 5px; background: linear-gradient(90deg, var(--dot-muted), var(--accent)); }
+
+#tip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: 12.5px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transform: translate(-50%, calc(-100% - 12px));
+}
+
+.detail {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px;
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.meta-row { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.sku { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.detail h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.2;
+  margin: 0;
+  text-wrap: balance;
+}
+.price { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.price s { color: var(--muted); margin-left: 6px; }
+.desc { margin: 0; }
+.materials { margin: 0; font-size: 12.5px; color: var(--muted); }
+
+.nn-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-top: 1px solid var(--line); padding-top: 12px; }
+.nn-head small { color: var(--muted); font-size: 12px; }
+ol.nn { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+ol.nn button {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) 44px 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+ol.nn button:hover { background: var(--bg); }
+ol.nn button:focus-visible { outline: 2px solid var(--accent); }
+.rank { font-family: var(--font-mono); font-size: 11px; color: var(--muted); text-align: right; }
+.nn-name { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.nn-name span.t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.from { font-family: var(--font-mono); font-size: 10.5px; color: var(--accent); border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; flex: none; }
+.cos { font-family: var(--font-mono); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+.nn-cols {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) 44px 40px;
+  gap: 8px;
+  padding: 0 6px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.nn-cols span:nth-child(n+3) { text-align: right; }
+
+table.compare { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.compare th, .compare td { padding: 5px 6px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+.compare th:first-child, .compare td:first-child { text-align: left; color: var(--muted); font-weight: 400; }
+.compare thead th { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 500; }
+.compare td { font-family: var(--font-mono); }
+.compare td.up { color: var(--accent); font-weight: 500; }
+
+.ranker {
+  display: grid;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.ranker-head { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between; }
+.ranker-head h3 { font-family: var(--font-display); font-weight: 500; font-size: 17px; margin: 0; }
+.knobs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 28px; }
+@media (max-width: 760px) { .knobs { grid-template-columns: minmax(0, 1fr); } }
+.knob { display: grid; gap: 4px; min-width: 0; }
+.knob-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.knob-top label { font-weight: 600; font-size: 13px; }
+.knob output { font-family: var(--font-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+.knob input[type="range"] { width: 100%; accent-color: var(--accent); }
+.knob small { color: var(--muted); font-size: 12px; }
+.knob select { font: inherit; font-size: 12px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 2px 4px; }
+.formula { margin: 0; font-size: 12.5px; color: var(--muted); }
+.formula code { font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
+
+.diag {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) { .diag { grid-template-columns: minmax(0, 1fr); } }
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.panel h3 { font-family: var(--font-display); font-weight: 500; font-size: 17px; margin: 0; }
+.panel p { margin: 0; color: var(--muted); font-size: 13px; max-width: 68ch; }
+.scroll-x { overflow-x: auto; }
+table.matrix { border-collapse: separate; border-spacing: 3px; font-size: 12.5px; }
+.matrix th { font-weight: 500; color: var(--muted); text-align: left; padding: 4px 6px; white-space: nowrap; }
+.matrix thead th { text-align: center; font-size: 11.5px; }
+.matrix td {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  padding: 8px 10px;
+  border-radius: 5px;
+  min-width: 62px;
+}
+.matrix td.diag-cell { outline: 1.5px solid var(--ink); outline-offset: -1.5px; }
+
+#sil { width: 100%; height: auto; max-width: 100%; display: block; }
+#sil text { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+#sil .b { fill: var(--dot-muted); }
+#sil .b.best { fill: var(--accent); }
+#sil .b.five { fill: var(--muted); }
+#sil .grid { stroke: var(--line); }
+
+.action { display: grid; gap: 10px; border: 1px solid var(--line); border-radius: 8px; padding: 12px; background: var(--bg); min-width: 0; }
+.action-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.action h4 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 15px; }
+.action-top small { color: var(--muted); font-size: 12px; }
+.action-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; }
+.action-grid .wide { grid-column: 1 / -1; }
+.field { display: grid; gap: 3px; font-size: 12px; color: var(--muted); min-width: 0; }
+.field-top { display: flex; justify-content: space-between; gap: 6px; }
+.field output { font-family: var(--font-mono); color: var(--ink); }
+.action select { font: inherit; font-size: 12.5px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; width: 100%; min-width: 0; }
+.action input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
+.sess { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); }
+.sess-pill { display: inline-flex; align-items: center; gap: 2px; border: 1px solid var(--line); border-radius: 999px; padding: 2px 2px 2px 8px; color: var(--ink); background: var(--surface); font-size: 12px; max-width: 100%; }
+.sess-pill span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sess-pill button { all: unset; cursor: pointer; padding: 0 6px; color: var(--muted); }
+.sess-pill button:hover { color: var(--ink); }
+.sess-pill button:focus-visible { outline: 2px solid var(--accent); border-radius: 4px; }
+.action-run { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.action-run p { margin: 0; font-size: 12.5px; color: var(--muted); }
+.action-run p.err { color: var(--danger); }
+.anc { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); text-align: right; }
+.moved { font-family: var(--font-mono); font-size: 11px; text-align: right; color: var(--muted); }
+.moved.new { color: var(--accent); font-weight: 600; }
+.action details summary { cursor: pointer; font-size: 12.5px; color: var(--muted); }
+.action details ol { margin: 6px 0 0; padding-left: 22px; font-size: 12.5px; color: var(--muted); display: grid; gap: 2px; }
+
+details.action { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--bg); min-width: 0; }
+details.action > summary { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; cursor: pointer; list-style: none; }
+details.action > summary::-webkit-details-marker { display: none; }
+details.action > summary h4::before { content: "▸"; display: inline-block; width: 14px; color: var(--muted); }
+details.action[open] > summary h4::before { content: "▾"; }
+details.action > summary small { color: var(--muted); font-size: 12px; }
+.action-body { display: grid; gap: 10px; margin-top: 10px; min-width: 0; }
+.check { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; color: var(--ink); cursor: pointer; }
+.check input { accent-color: var(--accent); margin-top: 3px; }
+.check span { display: grid; gap: 1px; font-weight: 500; }
+.check small { font-weight: 400; color: var(--muted); font-size: 12px; }
+.sess-group { display: grid; gap: 6px; min-width: 0; }
+.sess-group h5 { margin: 0; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.add-row { display: flex; gap: 6px; min-width: 0; }
+.add-row input { flex: 1 1 auto; min-width: 0; }
+.add-row .pill { flex: none; }
+.sess .note { font-size: 12px; color: var(--muted); }
+.materials.err { color: var(--danger); }
+.panel[hidden] { display: none; }
+.flow { gap: 14px; }
+.flow-head { display: grid; gap: 4px; }
+.flow-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+@media (max-width: 1000px) { .flow-steps { grid-template-columns: minmax(0, 1fr); } }
+.step { display: grid; gap: 10px; align-content: start; min-width: 0; border: 1px solid var(--line); border-radius: 8px; padding: 12px; background: var(--bg); }
+.step.off { opacity: 0.55; }
+.step-head { display: flex; align-items: center; gap: 8px; }
+.step-head h4 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 16px; }
+.step-n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: var(--surface); font-size: 12px; font-weight: 600; flex: none; }
+.step select { font: inherit; font-size: 12.5px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; width: 100%; min-width: 0; }
+.step input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
+.step .add-row select { flex: 1 1 auto; width: auto; }
+.materials.stale { color: var(--danger); }
+ol.plain { margin: 0; padding-left: 22px; display: grid; gap: 1px; font-size: 12.5px; }
+ol.plain.dim { opacity: 0.5; }
+ol.plain button { all: unset; box-sizing: border-box; display: flex; align-items: center; gap: 6px; width: 100%; padding: 3px 4px; border-radius: 5px; cursor: pointer; min-width: 0; }
+ol.plain button:hover { background: var(--surface); }
+ol.plain button:focus-visible { outline: 2px solid var(--accent); }
+ol.plain .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.linkish { all: unset; cursor: pointer; font-size: 12.5px; color: var(--accent); }
+.linkish:hover { text-decoration: underline; }
+.linkish:focus-visible { outline: 2px solid var(--accent); border-radius: 4px; }
+.why-legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 11.5px; color: var(--muted); }
+.why-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.why-legend i.k { width: 12px; height: 6px; border-radius: 1px; display: inline-block; }
+svg.why { display: block; justify-self: end; }
+svg.why .zero { stroke: var(--line); stroke-width: 1; }
+.b-list { fill: var(--muted); background: var(--muted); }
+.b-query { fill: var(--accent); background: var(--accent); }
+.b-click { fill: var(--k1); background: var(--k1); }
+.b-session { fill: var(--k4); background: var(--k4); }
+ol.nn.rr button, .rr-cols { grid-template-columns: 18px minmax(0, 1fr) 46px 60px; }
+.timeline { margin: 0; padding-left: 22px; font-size: 12.5px; color: var(--muted); display: grid; gap: 3px; }
+.timeline li.done { color: var(--ink); }
+.timeline li.now { color: var(--accent); font-weight: 600; }
+.sb-in { font: inherit; font-size: 13px; width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); resize: vertical; }
+.sb-names { display: flex; flex-wrap: wrap; gap: 6px; }
+.sb-name { display: inline-grid; gap: 0; border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; background: var(--surface); font-size: 12.5px; }
+.sb-name small { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+#map .alink { stroke-width: 2; stroke-dasharray: 6 5; pointer-events: none; }
+#map .alink.a-query { stroke: var(--accent); }
+#map .alink.a-click { stroke: var(--k1); }
+#map .alink.a-session { stroke: var(--k4); }
+#map .amark circle { fill: none; stroke-width: 3; }
+#map .amark.a-query circle { stroke: var(--accent); }
+#map .amark.a-click circle { stroke: var(--k1); }
+#map .amark.a-session circle { stroke: var(--k4); }
+#map .amark text, #map .newmark text { font-family: var(--font-body); font-size: 20px; font-weight: 600; fill: var(--ink); paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
+#map .newmark polygon { fill: var(--accent); stroke: var(--ink); stroke-width: 1.5; }
+#map .nlink { stroke: var(--accent); stroke-opacity: 0.6; stroke-width: 1.5; stroke-dasharray: 3 4; pointer-events: none; }
+.cmp-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.cmp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 12px; }
+.cmp-col { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.cmp-col h4 { margin: 0; font-size: 13px; font-weight: 600; }
+.cmp-col ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: c; }
+.cmp-col li { counter-increment: c; border: 1px solid transparent; border-radius: 6px; }
+.cmp-col li.unique { border-color: var(--accent); }
+.cmp-col li button { all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: 16px 10px minmax(0, 1fr) auto; align-items: center; gap: 6px; padding: 4px 6px; cursor: pointer; font-size: 12.5px; border-radius: 6px; }
+.cmp-col li button::before { content: counter(c); font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); text-align: right; }
+.cmp-col li button:hover { background: var(--bg); }
+.cmp-col li button:focus-visible { outline: 2px solid var(--accent); }
+.cmp-col .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cmp-col p { font-size: 12px; }
+
+footer { color: var(--muted); font-size: 12.5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  #map .dot, #map .ring, #map .qmark { transition: none; }
+}
+</style>
+
+<div class="page">
+  <header>
+    <h1>Quince Embedding Explorer</h1>
+    <p class="lede"><span id="n-products">106</span> mock Quince product descriptions, embedded with BERT-family encoders (plus a masked-set-model tuned space) and projected to 2D with UMAP. Click any dot to see its nearest neighbors by cosine similarity, or type a shopper query to embed it into the same space. Distances on the map are approximate; the neighbor list uses the full 768-dimension vectors.</p>
+  </header>
+
+  <div class="controls">
+    <div class="control">
+      <span class="label" id="lbl-model">Encoder</span>
+      <div class="seg" role="group" aria-labelledby="lbl-model" id="model-seg"></div>
+    </div>
+    <div class="control">
+      <span class="label" id="lbl-color">Color by</span>
+      <div class="seg" role="group" aria-labelledby="lbl-color" id="color-seg"></div>
+    </div>
+    <div class="control grow">
+      <label class="label" for="search">Find a product</label>
+      <input id="search" list="product-list" placeholder="Type a name or SKU, e.g. linen" autocomplete="off">
+      <datalist id="product-list"></datalist>
+    </div>
+  </div>
+
+  <section class="query" aria-label="Query the embedding space">
+    <form id="qform">
+      <input id="q" aria-label="Query to embed" placeholder="Describe what a shopper wants, e.g. a cozy gift for my mom" autocomplete="off" maxlength="1000">
+      <button class="primary" id="qbtn" type="submit">Embed query</button>
+    </form>
+    <div class="qrow" id="qexamples"></div>
+    <div class="qrow" id="qhistory" hidden></div>
+    <p id="qstatus"></p>
+  </section>
+
+  <section class="ranker" aria-label="Ranker">
+    <div class="ranker-head">
+      <h3>Ranker</h3>
+      <div class="seg" role="group" aria-label="Ranker presets" id="presets"></div>
+    </div>
+    <div class="knobs">
+      <div class="knob">
+        <div class="knob-top"><label for="k-rel">Relevance</label><output id="o-rel" for="k-rel"></output></div>
+        <input type="range" id="k-rel" min="0" max="1" step="0.05">
+        <small>Weight on cosine similarity to the selected product or query.</small>
+      </div>
+      <div class="knob">
+        <div class="knob-top"><label for="k-div">Diversity</label><output id="o-div" for="k-div"></output></div>
+        <input type="range" id="k-div" min="0" max="1" step="0.05">
+        <small>Penalty for looking like something already in the list (MMR).</small>
+      </div>
+      <div class="knob">
+        <div class="knob-top">
+          <label for="k-margin">Margin</label>
+          <select id="k-mode" aria-label="Margin measure">
+            <option value="pct">% of price</option>
+            <option value="usd">$ per unit</option>
+          </select>
+          <output id="o-margin" for="k-margin"></output>
+        </div>
+        <input type="range" id="k-margin" min="0" max="1" step="0.05">
+        <small>Boost for high-margin items. Margins are made up for this demo.</small>
+      </div>
+    </div>
+    <p class="formula">Each of the 10 slots is filled greedily with the product that maximizes <code>relevance × sim + margin × margin − diversity × (max sim to products already picked)</code>, with each term scaled to 0–1.</p>
+  </section>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="workspace">
+    <div class="map-wrap">
+      <svg id="map" viewBox="0 0 1000 800" role="img" aria-label="UMAP projection of product description embeddings"></svg>
+      <div id="tip" hidden></div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <aside class="detail" id="detail" aria-live="polite"></aside>
+  </div>
+
+  <section class="panel flow" id="flow" aria-label="Session re-rank"></section>
+
+  <section class="panel cmp" id="rr-compare" aria-label="Re-rank systems side by side" hidden></section>
+
+  <div class="diag">
+    <section class="panel">
+      <h3>Average similarity between categories</h3>
+      <p>Mean cosine similarity for every pair of products drawn from the two categories. Outlined cells are within-category. A good encoder makes the outlined cells clearly darker than the rest of their row.</p>
+      <div class="scroll-x"><table class="matrix" id="matrix"></table></div>
+    </section>
+    <section class="panel">
+      <h3>How many natural groups?</h3>
+      <p>Silhouette score for KMeans at each k (higher means tighter, better-separated clusters). The highlighted bar is the best k; the darker grey bar is k=5, the number of real categories.</p>
+      <svg id="sil" viewBox="0 0 420 170" role="img" aria-label="Silhouette score by number of clusters"></svg>
+    </section>
+  </div>
+
+  <footer>Mock catalog data written for a case study, not pulled from Quince. Embeddings from <code>bert-base-uncased</code> (mean-pooled) and <code>sentence-transformers/all-mpnet-base-v2</code>. The set-model tuned space is MPNet passed through an adapter trained with a masked set model on taxonomy menus.</footer>
+</div>
+
+<script src="explorer_data.js"></script>
+<script>
+(() => {
+  const D = window.QUINCE_DATA;
+  const P = D.products;
+  const N = P.length;
+  const MODEL_NAMES = { "bert-base": "Raw BERT", "mpnet": "MPNet (sentence-tuned)", "mpnet-set": "Set-model tuned" };
+  const COLOR_MODES = [
+    ["category", "Category"],
+    ["kmeans5", "KMeans k=5"],
+    ["kmeansBest", "KMeans best k"],
+    ["similarity", "Similarity to selected"],
+    ...(D.facets ? [["facet:type", "Type"], ["facet:material", "Material"], ["facet:occasion", "Occasion"], ["facet:price", "Price band"]] : []),
+  ];
+  const catLabel = Object.fromEntries(D.categories.map(c => [c.key, c.label]));
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const PAD = 40, W = 1000, H = 800;
+
+  const state = { model: "mpnet", color: "category", selected: 0, search: "", active: null };
+  const queries = []; // embedded queries, newest first; state.active is one of these or null
+  try {
+    const saved = JSON.parse(localStorage.getItem("qe-state") || "{}");
+    if (saved.model in D.models) state.model = saved.model;
+    if (COLOR_MODES.some(m => m[0] === saved.color)) state.color = saved.color;
+    if (Number.isInteger(saved.selected) && saved.selected >= 0 && saved.selected < N) state.selected = saved.selected;
+  } catch (e) {}
+  const save = () => {
+    try { localStorage.setItem("qe-state", JSON.stringify({ model: state.model, color: state.color, selected: state.selected })); } catch (e) {}
+  };
+
+  // ---- additional actions: session re-rank (needs quince_explorer_server.py) ----
+  const RR = { opts: null, system: "C", source: "search", lam: 0.6, chain: false, result: null, compare: null,
+               busy: false, comparing: false, msg: "", err: false, open: { rerank: true },
+               termDraft: "", clickDraft: "", sessMsg: "" };
+  try {
+    const s = JSON.parse(localStorage.getItem("qe-rerank") || "{}");
+    for (const k of ["system", "source", "lam", "chain"]) if (k in s) RR[k] = s[k];
+  } catch (e) {}
+  const saveRR = () => { try { localStorage.setItem("qe-rerank", JSON.stringify({ system: RR.system, source: RR.source, lam: RR.lam, chain: RR.chain })); } catch (e) {} };
+  const sessionClicks = [];               // clicked items, newest first: added in Re-rank or by opening a product
+  const sessionViews = [];                // products "viewed" (only set by session replay); half the weight of a click
+  const sessionTerms = [];                // search terms, newest first: typed in Re-rank or embedded as queries
+  const MAX_CLICKS = 8, MAX_TERMS = 10;
+
+  const FL = { first: null, busy: false, msg: "" }; // step 2 of the session re-rank: the first pass
+
+  const $ = id => document.getElementById(id);
+  const el = (tag, attrs = {}, text) => {
+    const n = tag.startsWith("svg:") ? document.createElementNS(SVGNS, tag.slice(4)) : document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+    if (text != null) n.textContent = text;
+    return n;
+  };
+  const M = () => D.models[state.model];
+  const toXY = ([x, y]) => [PAD + x * (W - 2 * PAD), PAD + y * (H - 2 * PAD)];
+  const pos = i => toXY(M().xy[i]);
+  // the current selection, whether it's a product or an embedded query
+  const sel = () => {
+    if (state.active) {
+      const r = state.active.models[state.model];
+      return { xy: toXY(r.xy), sims: r.sim, nn: r.neighbors, self: -1 };
+    }
+    const i = state.selected;
+    return { xy: pos(i), sims: M().sim[i], nn: M().neighbors[i], self: i };
+  };
+  const clip = (s, n) => s.length > n ? s.slice(0, n - 1) + "…" : s;
+  const pct = v => `${Math.round(v * 100)}%`;
+  const usd = v => `$${Math.round(v).toLocaleString()}`;
+
+  // ---- ranker: greedy MMR with a margin term ----
+  const PRESETS = [
+    ["Pure similarity", { rel: 1, div: 0, margin: 0 }],
+    ["Varied", { rel: 1, div: 0.6, margin: 0 }],
+    ["Balanced", { rel: 1, div: 0.35, margin: 0.35 }],
+    ["Margin push", { rel: 1, div: 0.2, margin: 0.8 }],
+  ];
+  const knobs = { rel: 1, div: 0.35, margin: 0.35, mode: "pct" };
+  try { Object.assign(knobs, JSON.parse(localStorage.getItem("qe-knobs") || "{}")); } catch (e) {}
+  const marginOf = j => knobs.mode === "usd" ? P[j].marginDollars : P[j].marginPct;
+  const norm = (v, lo, hi) => hi > lo ? (v - lo) / (hi - lo) : 0;
+  let ranked = [];   // [{ j, score, r, g, red }] for the current selection
+  let baseline = []; // pure-similarity order of all candidates
+
+  // greedy MMR with a margin term over candidate products; relOf(j) is relevance in 0..1.
+  // `seed` products count as already picked for the diversity penalty (e.g. pinned slots).
+  function mmr(cand, relOf, n = 10, seed = []) {
+    const m = M();
+    const mAll = P.map((_, j) => marginOf(j));
+    const mlo = Math.min(...mAll), mhi = Math.max(...mAll);
+    const slo = m.stats.cosMin, shi = m.stats.cosMax;
+    const picked = [], pickedJ = [...seed], left = new Set(cand);
+    while (picked.length < n && left.size) {
+      let best = null;
+      for (const j of left) {
+        const r = relOf(j);
+        const g = norm(mAll[j], mlo, mhi);
+        let red = 0;
+        for (const p of pickedJ) red = Math.max(red, norm(m.sim[j][p], slo, shi));
+        // tiny relevance tiebreak so all-zero knobs still return something sensible
+        const score = knobs.rel * r + knobs.margin * g - knobs.div * red + 1e-6 * r;
+        if (!best || score > best.score) best = { j, score, r, g, red };
+      }
+      picked.push(best);
+      pickedJ.push(best.j);
+      left.delete(best.j);
+    }
+    return picked;
+  }
+
+  function rank({ sims, self }) {
+    const cand = P.map((_, j) => j).filter(j => j !== self);
+    baseline = [...cand].sort((a, b) => sims[b] - sims[a]);
+    const rlo = sims[baseline[baseline.length - 1]], rhi = sims[baseline[0]];
+    return mmr(cand, j => norm(sims[j], rlo, rhi));
+  }
+  const refreshRank = () => { ranked = rank(sel()); };
+
+  // summary numbers for a top-10 list, used to compare ranked vs pure similarity
+  function listStats(js, sims) {
+    const S = M().sim;
+    let pair = 0, n = 0;
+    js.forEach((a, x) => js.slice(x + 1).forEach(b => { pair += S[a][b]; n++; }));
+    const avg = f => js.reduce((s, j) => s + f(j), 0) / js.length;
+    return {
+      sim: avg(j => sims[j]),
+      marginPct: avg(j => P[j].marginPct),
+      marginUsd: js.reduce((s, j) => s + P[j].marginDollars, 0),
+      cats: new Set(js.map(j => P[j].category)).size,
+      intra: pair / n,
+    };
+  }
+
+  function renderKnobs() {
+    for (const k of ["rel", "div", "margin"]) {
+      $(`k-${k}`).value = knobs[k];
+      $(`o-${k}`).textContent = Number(knobs[k]).toFixed(2);
+    }
+    $("k-mode").value = knobs.mode;
+    for (const b of $("presets").children) {
+      const p = PRESETS[+b.dataset.i][1];
+      b.setAttribute("aria-pressed", ["rel", "div", "margin"].every(k => Math.abs(p[k] - knobs[k]) < 1e-9));
+    }
+  }
+  function knobsChanged() {
+    try { localStorage.setItem("qe-knobs", JSON.stringify(knobs)); } catch (e) {}
+    renderKnobs(); refreshRank(); paintSelection(); renderDetail(); renderFlow();
+  }
+  $("presets").replaceChildren(...PRESETS.map(([label, p], i) => {
+    const b = el("button", { type: "button", "data-i": i }, label);
+    b.addEventListener("click", () => { Object.assign(knobs, p); knobsChanged(); });
+    return b;
+  }));
+  for (const k of ["rel", "div", "margin"]) {
+    $(`k-${k}`).addEventListener("input", e => { knobs[k] = +e.target.value; knobsChanged(); });
+  }
+  $("k-mode").addEventListener("change", e => { knobs.mode = e.target.value; knobsChanged(); });
+  const catVar = c => `var(--cat-${c})`;
+  const shortName = n => n.replace("Mongolian Cashmere ", "MC ").replace("Italian Leather ", "IL ");
+
+  // ---- controls ----
+  function buildSeg(container, options, key) {
+    container.replaceChildren(...options.map(([value, label]) => {
+      const b = el("button", { type: "button", "data-value": value }, label);
+      b.addEventListener("click", () => { state[key] = value; save(); render(); });
+      return b;
+    }));
+  }
+  buildSeg($("model-seg"), Object.keys(D.models).map(k => [k, MODEL_NAMES[k] || k]), "model");
+  buildSeg($("color-seg"), COLOR_MODES, "color");
+
+  $("product-list").replaceChildren(...P.map(p => el("option", { value: `${p.name} (${p.sku})` })));
+  $("search").addEventListener("input", e => {
+    const v = e.target.value.trim();
+    const exact = P.findIndex(p => v === `${p.name} (${p.sku})` || v.toUpperCase() === p.sku);
+    if (exact >= 0) { state.search = ""; paintDots(); select(exact); e.target.blur(); return; }
+    state.search = v.toLowerCase();
+    paintDots();
+  });
+
+  // ---- free-text queries (needs quince_explorer_server.py) ----
+  const EXAMPLES = ["a cozy gift for my mom", "something to help me sleep better", "minimal wedding jewelry", "work bag that fits a laptop", "breathable clothes for a beach vacation"];
+  const qStatus = (msg, err = false) => { const s = $("qstatus"); s.className = err ? "err" : ""; s.replaceChildren(...[].concat(msg)); };
+
+  $("qexamples").replaceChildren("Try:", ...EXAMPLES.map(t => {
+    const b = el("button", { type: "button", class: "pill" }, t);
+    b.addEventListener("click", () => { $("q").value = t; runQuery(t); });
+    return b;
+  }));
+
+  function renderHistory() {
+    const h = $("qhistory");
+    h.hidden = queries.length === 0;
+    h.replaceChildren("Your queries:", ...queries.map(q => {
+      const b = el("button", { type: "button", class: "pill", "aria-pressed": state.active === q, title: q.text }, clip(q.text, 40));
+      b.addEventListener("click", () => activate(q));
+      return b;
+    }));
+  }
+
+  async function runQuery(text) {
+    text = text.trim();
+    if (!text) { qStatus("Type a query first.", true); return; }
+    const seen = queries.find(q => q.text.toLowerCase() === text.toLowerCase());
+    if (seen) { activate(seen); return; }
+    $("qbtn").disabled = true;
+    qStatus("Embedding with both encoders…");
+    try {
+      const r = await fetch("/api/embed", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+      const body = await r.json();
+      if (!r.ok) throw new Error(body.error || `Server returned ${r.status}`);
+      queries.unshift(body);
+      queries.splice(8);
+      if (state.color === "category") state.color = "similarity";
+      qStatus(`Embedded "${clip(text, 60)}". Diamonds on the map are your queries; click one to bring it back.`);
+      state.active = body;
+      render();
+    } catch (err) {
+      qStatus(`Couldn't embed that query: ${err.message}`, true);
+    } finally {
+      $("qbtn").disabled = false;
+    }
+  }
+
+  $("qform").addEventListener("submit", e => { e.preventDefault(); runQuery($("q").value); });
+
+  (async () => {
+    try {
+      const r = await fetch("/api/health");
+      if (!r.ok) throw new Error();
+      qStatus("Type anything a shopper might say. It's embedded live with the same encoders as the product descriptions.");
+      const o = await fetch("/api/rerank/options");
+      if (o.ok) {
+        RR.opts = await o.json();
+        if (!RR.opts.systems.some(s => s.key === RR.system)) RR.system = RR.opts.defaultSystem;
+        if (RR.source !== "search" && !RR.opts.shoppers.includes(RR.source.slice("shopper:".length))) RR.source = "search";
+        renderDetail(); renderFlow();
+      }
+    } catch {
+      for (const n of document.querySelectorAll("#qform input, #qform button, #qexamples button")) n.disabled = true;
+      qStatus(["Query embedding runs on your machine. Start ", el("code", {}, ".venv/bin/python quince_explorer_server.py"), " in research_ML and open http://localhost:8765."]);
+    }
+  })();
+
+  // ---- map ----
+  const svg = $("map");
+  const edgeLayer = el("svg:g");
+  const dotLayer = el("svg:g");
+  const tagLayer = el("svg:g");
+  const queryLayer = el("svg:g");
+  const overlayLayer = el("svg:g");
+  const ring = el("svg:circle", { class: "ring", r: 13, cx: 0, cy: 0 });
+  svg.append(edgeLayer, dotLayer, ring, queryLayer, overlayLayer, tagLayer);
+  const dots = P.map((p, i) => {
+    const c = el("svg:circle", { class: "dot", r: 8, cx: 0, cy: 0 });
+    c.addEventListener("click", () => select(i));
+    c.addEventListener("mouseenter", () => showTip(i));
+    c.addEventListener("mouseleave", () => { $("tip").hidden = true; });
+    dotLayer.append(c);
+    return c;
+  });
+
+  function showTip(i) {
+    const [x, y] = pos(i);
+    const rect = svg.getBoundingClientRect();
+    const tip = $("tip");
+    tip.textContent = `${P[i].name} · ${catLabel[P[i].category]}`;
+    tip.style.left = `${(x / W) * rect.width}px`;
+    tip.style.top = `${(y / H) * rect.height}px`;
+    tip.hidden = false;
+  }
+
+  // facet value -> color: the 11 most common values get palette colors, the rest share "other"
+  const facetCache = {};
+  function facetCounts(f) {
+    const counts = new Map();
+    D.facets[f].forEach(v => counts.set(v, (counts.get(v) || 0) + 1));
+    return [...counts].sort((a, b) => b[1] - a[1]);
+  }
+  function facetColors(f) {
+    if (!facetCache[f]) facetCache[f] = new Map(facetCounts(f).slice(0, 11).map(([v], n) => [v, `var(--k${n})`]));
+    return facetCache[f];
+  }
+
+  function dotColor(i) {
+    const m = M();
+    if (state.color === "category") return catVar(P[i].category);
+    if (state.color === "kmeans5") return `var(--k${m.kmeans5[i]})`;
+    if (state.color === "kmeansBest") return `var(--k${m.kmeansBest[i]})`;
+    if (state.color.startsWith("facet:")) {
+      const f = state.color.slice(6);
+      return facetColors(f).get(D.facets[f][i]) || "var(--dot-muted)";
+    }
+    const { sims: row, self } = sel();
+    if (i === self) return "var(--ink)";
+    const vals = row.filter((_, j) => j !== self);
+    const lo = Math.min(...vals), hi = Math.max(...vals);
+    const t = Math.round(((row[i] - lo) / (hi - lo)) * 100);
+    return `color-mix(in oklab, var(--accent) ${t}%, var(--dot-muted))`;
+  }
+
+  function paintDots() {
+    const q = state.search;
+    dots.forEach((c, i) => {
+      const [x, y] = pos(i);
+      c.style.transform = `translate(${x}px, ${y}px)`;
+      c.style.fill = dotColor(i);
+      const hit = q && (P[i].name.toLowerCase().includes(q) || P[i].description.toLowerCase().includes(q) || P[i].sku.toLowerCase() === q);
+      c.classList.toggle("match", !!hit);
+      c.classList.toggle("dim", !!q && !hit);
+    });
+  }
+
+  function paintSelection() {
+    const { xy: [sx, sy], self } = sel();
+    ring.style.display = self < 0 ? "none" : "";
+    ring.style.transform = `translate(${sx}px, ${sy}px)`;
+    overlayLayer.replaceChildren(...actionOverlays());
+    // while a re-rank is shown, its anchor lines replace the top-5 edges
+    edgeLayer.replaceChildren(...(RR.result ? [] : ranked.slice(0, 5)).map(({ j }) => {
+      const [x, y] = pos(j);
+      return el("svg:line", { class: "edge", x1: sx, y1: sy, x2: x, y2: y });
+    }));
+    queryLayer.replaceChildren(...queries.map(q => {
+      const [x, y] = toXY(q.models[state.model].xy);
+      const d = el("svg:rect", { class: q === state.active ? "qmark on" : "qmark", x: -9, y: -9, width: 18, height: 18 });
+      d.style.transform = `translate(${x}px, ${y}px) rotate(45deg)`;
+      d.addEventListener("click", () => activate(q));
+      d.append(el("svg:title", {}, `Query: ${q.text}`));
+      return d;
+    }));
+    const right = sx < W * 0.6;
+    tagLayer.replaceChildren(el("svg:text", {
+      class: "tag",
+      x: right ? sx + 18 : sx - 18, y: sy + 8,
+      "text-anchor": right ? "start" : "end",
+    }, self < 0 ? `"${clip(state.active.text, 34)}"` : shortName(P[self].name)));
+  }
+
+  // ---- legend ----
+  function renderLegend() {
+    const lg = $("legend");
+    const m = M();
+    if (state.color === "category") {
+      lg.replaceChildren(...D.categories.map(c => {
+        const s = el("span"); const sw = el("i", { class: "swatch" }); sw.style.background = catVar(c.key);
+        s.append(sw, c.label); return s;
+      }));
+    } else if (state.color.startsWith("facet:")) {
+      const f = state.color.slice(6), colors = facetColors(f);
+      const counts = facetCounts(f);
+      const items = counts.filter(([v]) => colors.has(v)).map(([v, n]) => {
+        const s = el("span"); const sw = el("i", { class: "swatch" }); sw.style.background = colors.get(v);
+        s.append(sw, `${v} (${n})`); return s;
+      });
+      const rest = counts.filter(([v]) => !colors.has(v)).reduce((s, [, n]) => s + n, 0);
+      if (rest) { const s = el("span"); const sw = el("i", { class: "swatch" }); sw.style.background = "var(--dot-muted)"; s.append(sw, `Other (${rest})`); items.push(s); }
+      items.push(el("span", {}, "from quince_taxonomy.py; first value where a product has several"));
+      lg.replaceChildren(...items);
+    } else if (state.color === "similarity") {
+      const s = el("span"); s.append("Least similar", el("i", { class: "ramp" }), "Most similar to the selected product or query");
+      lg.replaceChildren(s);
+    } else {
+      const assign = m[state.color];
+      const k = Math.max(...assign) + 1;
+      const items = [];
+      for (let c = 0; c < k; c++) {
+        // name each cluster by its dominant category so the legend is readable
+        const members = assign.map((a, i) => a === c ? P[i].category : null).filter(Boolean);
+        const counts = {};
+        members.forEach(x => counts[x] = (counts[x] || 0) + 1);
+        const [top, n] = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+        const s = el("span"); const sw = el("i", { class: "swatch" }); sw.style.background = `var(--k${c})`;
+        s.append(sw, `Cluster ${c + 1}: ${members.length} items, ${Math.round(100 * n / members.length)}% ${catLabel[top]}`);
+        items.push(s);
+      }
+      lg.replaceChildren(...items);
+    }
+  }
+
+  // ---- stats ----
+  function renderStats() {
+    const s = M().stats;
+    const item = (label, val) => { const d = el("span"); d.append(label + " ", el("b", {}, val)); return d; };
+    $("stats").replaceChildren(
+      item("Model", M().label),
+      item("Cosine range", `${s.cosMin.toFixed(2)} to ${s.cosMax.toFixed(2)}`),
+      item("Mean", s.cosMean.toFixed(2)),
+      item("Same-category top-5 neighbors", `${Math.round(s.purity5 * 100)}%`),
+      item("KMeans k=5 vs categories (ARI)", s.ari5.toFixed(2)),
+    );
+  }
+
+  // ---- detail ----
+  function renderDetail() {
+    renderCompare();
+    const { sims: row, self } = sel();
+    const js = ranked.map(x => x.j);
+    const baseRank = new Map(baseline.map((j, r) => [j, r + 1]));
+
+    const head = el("div", { class: "nn-head" });
+    head.append(el("span", { class: "label" }, "Ranked results"),
+                el("small", {}, "badge = its position by similarity alone"));
+    const cols = el("div", { class: "nn-cols", "aria-hidden": "true" });
+    cols.append(el("span", {}, "#"), el("span", {}, "Product"), el("span", {}, "Sim"), el("span", {}, "Margin"));
+
+    const list = el("ol", { class: "nn" });
+    ranked.forEach(({ j, score }, r) => {
+      const q = P[j];
+      const was = baseRank.get(j);
+      const b = el("button", { type: "button",
+        "aria-label": `${q.name}, similarity ${row[j].toFixed(3)}, margin ${pct(q.marginPct)}, similarity rank ${was}` });
+      const name = el("span", { class: "nn-name" });
+      const d = el("i", { class: "swatch" }); d.style.background = catVar(q.category);
+      name.append(d, el("span", { class: "t", title: `${q.name} · score ${score.toFixed(2)}` }, q.name));
+      if (was !== r + 1) name.append(el("span", { class: "from" }, `#${was}`));
+      const mg = knobs.mode === "usd" ? usd(q.marginDollars) : pct(q.marginPct);
+      b.append(el("span", { class: "rank" }, r + 1), name, el("span", { class: "cos" }, row[j].toFixed(2)), el("span", { class: "cos" }, mg));
+      b.addEventListener("click", () => select(j));
+      b.addEventListener("mouseenter", () => showTip(j));
+      b.addEventListener("mouseleave", () => { $("tip").hidden = true; });
+      const li = el("li"); li.append(b); list.append(li);
+    });
+
+    // ranked list vs pure-similarity top 10
+    const a = listStats(baseline.slice(0, 10), row), z = listStats(js, row);
+    const metrics = [
+      ["Avg similarity", a.sim.toFixed(3), z.sim.toFixed(3), z.sim > a.sim + 1e-9],
+      ["Avg margin", pct(a.marginPct), pct(z.marginPct), z.marginPct > a.marginPct + 1e-9],
+      ["Margin $ (1 of each)", usd(a.marginUsd), usd(z.marginUsd), z.marginUsd > a.marginUsd + 1e-9],
+      ["Categories", a.cats, z.cats, z.cats > a.cats],
+      ["Similarity within list", a.intra.toFixed(3), z.intra.toFixed(3), z.intra < a.intra - 1e-9],
+    ];
+    const table = el("table", { class: "compare" });
+    const th = el("tr"); th.append(el("th", {}, ""), el("th", {}, "Similarity only"), el("th", {}, "Ranked"));
+    const thead = el("thead"); thead.append(th);
+    const tbody = el("tbody");
+    for (const [label, x, y, better] of metrics) {
+      const tr = el("tr");
+      tr.append(el("td", {}, label), el("td", {}, x), el("td", { class: better ? "up" : "" }, y));
+      tbody.append(tr);
+    }
+    table.append(thead, tbody);
+    const compare = [el("div", { class: "nn-head" }), table,
+      el("p", { class: "materials" }, "Highlighted where the ranked list beats similarity-only (lower within-list similarity means more varied).")];
+    compare[0].append(el("span", { class: "label" }, "Trade-off vs. similarity only"));
+
+    if (self < 0) {
+      const meta = el("div", { class: "meta-row" });
+      meta.append(el("span", { class: "chip" }, "Your query"));
+      $("detail").replaceChildren(
+        meta, el("h2", {}, `"${state.active.text}"`),
+        el("p", { class: "desc" }, `Embedded live with ${M().label}, using the same encoder and pooling as the product descriptions. Best match scores ${row[baseline[0]].toFixed(3)} cosine.`),
+        head, cols, list, ...compare, ...renderActions(),
+      );
+      return;
+    }
+
+    const p = P[self];
+    const chip = el("span", { class: "chip" });
+    const sw = el("i", { class: "swatch" }); sw.style.background = catVar(p.category);
+    chip.append(sw, `${catLabel[p.category]} · ${p.subcategory}`);
+    const meta = el("div", { class: "meta-row" });
+    meta.append(chip, el("span", { class: "sku" }, p.sku));
+    const price = el("div", { class: "price" }, `$${p.price.toLocaleString()}`);
+    price.append(el("s", {}, `$${p.compareAt.toLocaleString()}`));
+
+    $("detail").replaceChildren(
+      meta, el("h2", {}, p.name), price,
+      el("p", { class: "desc" }, p.description),
+      el("p", { class: "materials" }, `${p.materials} · Margin ${pct(p.marginPct)} (${usd(p.marginDollars)} per unit, made up)`),
+      head, cols, list, ...compare, ...renderActions(),
+    );
+  }
+
+  // ---- session re-rank flow: 1 session, 2 first pass, 3 re-rank ----
+  const latestTerm = () => sessionTerms[0] || "";
+  function addTerm(t) {
+    t = (t || "").trim();
+    if (!t) return false;
+    const k = sessionTerms.findIndex(x => x.toLowerCase() === t.toLowerCase());
+    if (k >= 0) sessionTerms.splice(k, 1);
+    sessionTerms.unshift(t);
+    sessionTerms.splice(MAX_TERMS);
+    return true;
+  }
+  function addClick(i) {
+    const at = sessionClicks.indexOf(i);
+    if (at >= 0) sessionClicks.splice(at, 1);
+    const v = sessionViews.indexOf(i);
+    if (v >= 0) sessionViews.splice(v, 1);
+    sessionClicks.unshift(i);
+    sessionClicks.splice(MAX_CLICKS);
+  }
+  const rrStale = () => { RR.result = null; RR.compare = null; RR.msg = ""; RR.err = false; };
+  const rerender = () => { renderFlow(); renderDetail(); paintSelection(); };
+  const rrChanged = () => { rrStale(); rerender(); };
+  const sessionEmpty = () => !sessionClicks.length && !sessionViews.length && !sessionTerms.length;
+  const skuIdx = new Map(P.map((p, i) => [p.sku, i]));
+  const anchorWord = a => ({ click: "clicks", query: "search", session: "session" })[a] || "";
+  const signed = v => `${v >= 0 ? "+" : "−"}${Math.abs(v).toFixed(2)}`;
+  const sourceLabel = s => s === "search" ? "search results" : `${s.slice("shopper:".length)}'s Picked for you`;
+
+  // what the first pass depends on; if this changes, the first pass is out of date
+  const firstPassKey = () => JSON.stringify(RR.source === "search"
+    ? { s: "search", t: sessionTerms, c: sessionTerms.length ? [] : sessionClicks.map(i => P[i].sku) }
+    : { s: RR.source, c: sessionClicks.map(i => P[i].sku) });
+  const firstPassReady = () => !!FL.first && FL.first.key === firstPassKey();
+
+  function field(label, control, out) {
+    const f = el("label", { class: "field" });
+    const top = el("span", { class: "field-top" }); top.append(label);
+    if (out) top.append(out);
+    f.append(top, control);
+    return f;
+  }
+
+  // one collapsible block per detail-panel action; open/closed state survives re-renders
+  function block(key, title, sub, body) {
+    const d = el("details", { class: "action" });
+    d.open = !!RR.open[key];
+    d.addEventListener("toggle", () => { RR.open[key] = d.open; });
+    const s = el("summary");
+    s.append(el("h4", {}, title), el("small", {}, sub));
+    const inner = el("div", { class: "action-body" });
+    inner.append(...body);
+    d.append(s, inner);
+    return d;
+  }
+
+  // detail panel: an explicit way to put what you're looking at into the session, plus the sandbox
+  function renderActions() {
+    const head = el("div", { class: "nn-head" });
+    head.append(el("span", { class: "label" }, "Additional actions"));
+    if (!RR.opts) {
+      return [head, el("p", { class: "materials" },
+        "The session re-rank and the new-product sandbox run on your machine. Start quince_explorer_server.py and open http://localhost:8765 to use them.")];
+    }
+    const row = el("div", { class: "action-run" });
+    const { self } = sel();
+    if (self >= 0) {
+      const inSession = sessionClicks.includes(self);
+      const b = el("button", { type: "button", class: "pill" }, inSession ? "✓ In clicked items" : "+ Add to clicked items");
+      b.addEventListener("click", () => {
+        if (inSession) sessionClicks.splice(sessionClicks.indexOf(self), 1); else addClick(self);
+        rrChanged();
+      });
+      row.append(b);
+    } else {
+      const t = state.active.text;
+      const inSession = sessionTerms.some(x => x.toLowerCase() === t.toLowerCase());
+      const b = el("button", { type: "button", class: "pill" }, inSession ? "✓ In search terms" : "+ Add to search terms");
+      b.addEventListener("click", () => {
+        if (inSession) sessionTerms.splice(sessionTerms.findIndex(x => x.toLowerCase() === t.toLowerCase()), 1); else addTerm(t);
+        rrChanged();
+      });
+      row.append(b);
+    }
+    const go = el("button", { type: "button", class: "linkish" }, "Go to session re-rank ↓");
+    go.addEventListener("click", () => $("flow").scrollIntoView({ behavior: "smooth", block: "start" }));
+    row.append(go);
+    return [head, row, block("sandbox", "Try a new product", "cold start", sandboxBody())];
+  }
+
+  function chip(text, title, onRemove) {
+    const p = el("span", { class: "sess-pill", title });
+    const x = el("button", { type: "button", "aria-label": `Remove ${title} from the session` }, "×");
+    x.addEventListener("click", onRemove);
+    p.append(el("span", {}, text), x);
+    return p;
+  }
+
+  // an input + Add button; Enter also adds. The draft text survives re-renders.
+  function adder(draftKey, attrs, onAdd) {
+    const input = el("input", { type: "text", class: "sb-in", ...attrs });
+    input.value = RR[draftKey];
+    input.addEventListener("input", e => { RR[draftKey] = e.target.value; });
+    input.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); onAdd(); } });
+    const btn = el("button", { type: "button", class: "pill" }, "Add");
+    btn.addEventListener("click", onAdd);
+    const row = el("div", { class: "add-row" });
+    row.append(input, btn);
+    return row;
+  }
+
+  function sessionGroup(title, hint, row, chips) {
+    const g = el("div", { class: "sess-group" });
+    const list = el("div", { class: "sess" });
+    if (chips.length) list.append(...chips); else list.append(el("span", { class: "note" }, hint));
+    g.append(el("h5", {}, title), row, list);
+    return g;
+  }
+
+  function stepCard(n, title, sub, enabled, body) {
+    const c = el("div", { class: enabled ? "step" : "step off" });
+    const h = el("div", { class: "step-head" });
+    h.append(el("span", { class: "step-n" }, n), el("h4", {}, title));
+    c.append(h, el("p", { class: "materials" }, sub), ...body);
+    return c;
+  }
+
+  // step 1: what the shopper clicked and searched for
+  function stepSession() {
+    const addC = () => {
+      const v = RR.clickDraft.trim();
+      if (!v) return;
+      const j = P.findIndex(p => v === `${p.name} (${p.sku})` || v.toUpperCase() === p.sku || v.toLowerCase() === p.name.toLowerCase());
+      if (j < 0) { RR.sessMsg = `No product matches "${clip(v, 30)}". Pick one from the suggestions.`; renderFlow(); return; }
+      RR.sessMsg = ""; RR.clickDraft = "";
+      addClick(j);
+      rrChanged();
+    };
+    const clicks = sessionGroup("Clicked items", "None yet.",
+      adder("clickDraft", { list: "product-list", placeholder: "Type a name or SKU, e.g. CLO-003", "aria-label": "Product to add as clicked" }, addC),
+      [...sessionClicks.map((i, n) => chip(clip(shortName(P[i].name), 30), P[i].name, () => { sessionClicks.splice(n, 1); rrChanged(); })),
+       ...sessionViews.map((i, n) => chip(`viewed ${clip(shortName(P[i].name), 24)}`, P[i].name, () => { sessionViews.splice(n, 1); rrChanged(); }))]);
+
+    const addT = () => { if (addTerm(RR.termDraft)) { RR.termDraft = ""; rrChanged(); } };
+    const terms = sessionGroup("Search terms", "None yet.",
+      adder("termDraft", { maxlength: 200, placeholder: "e.g. linen for a summer wedding", "aria-label": "Search term to add" }, addT),
+      sessionTerms.map((t, n) => chip(`"${clip(t, 34)}"`, t, () => { sessionTerms.splice(n, 1); rrChanged(); })));
+
+    const ex = el("select", { "aria-label": "Example session" });
+    ex.append(el("option", { value: "" }, "Load an example session…"));
+    SCENARIOS.forEach((s, i) => ex.append(el("option", { value: i }, s.name)));
+    ex.addEventListener("change", e => { if (e.target.value !== "") loadScenario(SCENARIOS[+e.target.value]); });
+    const clear = el("button", { type: "button", class: "pill" }, "Clear");
+    clear.disabled = sessionEmpty();
+    clear.addEventListener("click", () => { sessionClicks.length = 0; sessionViews.length = 0; sessionTerms.length = 0; RR.sessMsg = ""; FL.first = null; rrChanged(); });
+    const tools = el("div", { class: "add-row" });
+    tools.append(ex, clear);
+
+    const body = [clicks, terms];
+    if (RR.sessMsg) body.push(el("p", { class: "materials err" }, RR.sessMsg));
+    body.push(tools);
+    return stepCard(1, "Session", "What the shopper clicked on and searched for. You can also add from the product panel above.", true, body);
+  }
+
+  // step 2: the list before re-ranking
+  function stepFirstPass() {
+    const src = el("select", { "aria-label": "First pass" });
+    src.append(el("option", { value: "search" }, "Search results for the search terms"));
+    RR.opts.shoppers.forEach(n => src.append(el("option", { value: `shopper:${n}` }, `Picked for you: ${n}`)));
+    src.value = RR.source;
+    src.addEventListener("change", e => { RR.source = e.target.value; saveRR(); rrChanged(); });
+
+    const can = RR.source === "search" ? !!(sessionTerms.length || sessionClicks.length) : true;
+    const btn = el("button", { type: "button", class: "primary" }, FL.busy ? "Building…" : "Build first pass");
+    btn.disabled = FL.busy || !can;
+    btn.addEventListener("click", buildFirstPass);
+    const run = el("div", { class: "action-run" });
+    run.append(btn);
+    if (FL.msg) run.append(el("p", { class: "err" }, FL.msg));
+
+    const body = [field("Start from", src), run];
+    if (FL.first) {
+      const ready = firstPassReady();
+      if (!ready) body.push(el("p", { class: "materials stale" }, "The session changed since this was built. Build it again before re-ranking."));
+      body.push(el("p", { class: "materials" }, `Ranked by ${FL.first.how}. Clicked and viewed items are left out.`));
+      const ol = el("ol", { class: "plain" + (ready ? "" : " dim") });
+      // what the re-rank will start from: the first pass minus anything now in the session
+      const seen = new Set([...sessionClicks, ...sessionViews].map(i => P[i].sku));
+      FL.first.order.filter(sku => !seen.has(sku)).slice(0, 10).forEach(sku => {
+        const j = skuIdx.get(sku);
+        const b = el("button", { type: "button", title: P[j].name });
+        const sw = el("i", { class: "swatch" }); sw.style.background = catVar(P[j].category);
+        b.append(sw, el("span", { class: "t" }, P[j].name));
+        b.addEventListener("click", () => select(j));
+        const li = el("li"); li.append(b); ol.append(li);
+      });
+      body.push(ol);
+    }
+    const hint = RR.source === "search" ? "Search results come from MPNet similarity (name + description) to the search terms." : "A mock shopper's precomputed, offline list.";
+    return stepCard(2, "First pass", `The list before the session is applied. ${hint}`, !sessionEmpty() || RR.source !== "search", body);
+  }
+
+  // step 3: apply the session to the first pass
+  function stepRerank() {
+    const ready = firstPassReady();
+    const sys = el("select", { "aria-label": "Re-rank system" });
+    RR.opts.systems.forEach(o => sys.append(el("option", { value: o.key }, o.label)));
+    sys.value = RR.system;
+    sys.addEventListener("change", e => { RR.system = e.target.value; saveRR(); RR.result = null; RR.msg = ""; rerender(); });
+
+    const lamOut = el("output", {}, Number(RR.lam).toFixed(2));
+    const lam = el("input", { type: "range", min: 0, max: 1, step: 0.05, "aria-label": "Session weight" });
+    lam.value = RR.lam;
+    lam.addEventListener("input", e => { RR.lam = +e.target.value; lamOut.textContent = RR.lam.toFixed(2); });
+    lam.addEventListener("change", () => {
+      saveRR();
+      RR.compare = null;
+      if (RR.result && ready) runRerank(); else renderFlow();
+    });
+
+    const chain = el("input", { type: "checkbox" });
+    chain.checked = RR.chain;
+    chain.addEventListener("change", e => { RR.chain = e.target.checked; saveRR(); rerender(); });
+    const chainL = el("label", { class: "check" });
+    const chainText = el("span", {}, "Apply knobs afterwards");
+    chainText.append(el("small", {}, "Diversity and margin from the Ranker, applied to the re-ranked list"));
+    chainL.append(chain, chainText);
+
+    const desc = RR.opts.systems.find(o => o.key === RR.system);
+    const run = el("div", { class: "action-run" });
+    const btn = el("button", { type: "button", class: "primary" }, RR.busy ? "Re-ranking…" : "Re-rank");
+    btn.disabled = RR.busy || !ready || sessionEmpty();
+    btn.addEventListener("click", runRerank);
+    const cmp = el("button", { type: "button", class: "pill" }, RR.comparing ? "Comparing…" : "Compare side by side");
+    cmp.disabled = RR.comparing || !ready || sessionEmpty();
+    cmp.addEventListener("click", compareAll);
+    run.append(btn, cmp);
+    if (RR.msg) run.append(el("p", { class: RR.err ? "err" : "" }, RR.msg));
+
+    const body = [field("System", sys)];
+    if (desc) body.push(el("p", { class: "materials" }, desc.desc));
+    body.push(field("Session weight (0 = first pass only, 1 = session only)", lam, lamOut), chainL, run);
+    if (RR.result) body.push(...renderRerankResult(RR.result));
+    return stepCard(3, "Re-rank", "Clicks pull toward similar products, search terms toward matches. The first two slots stay put.", ready, body);
+  }
+
+  function renderFlow() {
+    const sec = $("flow");
+    if (!RR.opts) {
+      sec.replaceChildren(el("h3", {}, "Session re-rank"), el("p", {},
+        "Runs on your machine: start quince_explorer_server.py in research_ML and open http://localhost:8765."));
+      return;
+    }
+    const head = el("div", { class: "flow-head" });
+    head.append(el("h3", {}, "Session re-rank"),
+      el("p", {}, "Say what a shopper clicked and searched for, build the list they'd see first, then re-rank it with their session."));
+    const steps = el("div", { class: "flow-steps" });
+    steps.append(stepSession(), stepFirstPass(), stepRerank());
+    sec.replaceChildren(head, steps);
+  }
+
+  async function buildFirstPass() {
+    FL.busy = true; FL.msg = ""; rrStale(); renderFlow();
+    try {
+      const body = { source: RR.source === "search" ? "search" : "shopper", shopper: RR.source.slice("shopper:".length),
+                     queries: [...sessionTerms], clicks: sessionClicks.map(i => P[i].sku), views: sessionViews.map(i => P[i].sku) };
+      const out = await postJSON("/api/first-pass", body);
+      FL.first = { ...out, key: firstPassKey() };
+    } catch (err) {
+      FL.first = null; FL.msg = `Couldn't build it: ${err.message}`;
+    } finally {
+      FL.busy = false; rerender();
+    }
+  }
+
+  function chainRows(r) {
+    const pinned = r.after.filter(a => a.pinned);
+    const pool = r.candidates.filter(c => !pinned.some(p => p.sku === c.sku));
+    const tot = c => c.list + c.session;
+    const lo = Math.min(...pool.map(tot)), hi = Math.max(...pool.map(tot));
+    const byJ = new Map(pool.map(c => [c.i, c]));
+    const picks = mmr(pool.map(c => c.i), j => norm(tot(byJ.get(j)), lo, hi), r.after.length - pinned.length, pinned.map(p => p.i));
+    const mid = new Map(r.after.map((a, n) => [a.sku, n + 1]));
+    return [...pinned, ...picks.map(p => byJ.get(p.j))].map(a => ({ ...a, mid: mid.get(a.sku) ?? null }));
+  }
+  const rowsOf = r => RR.chain ? chainRows(r) : r.after;
+
+  function rowSummary(r, rows) {
+    const fromList = new Set(r.before.map(b => b.sku));
+    const kept = rows.filter(a => fromList.has(a.sku)).length;
+    const pulled = {};
+    rows.forEach(a => { if (!fromList.has(a.sku)) pulled[a.anchor] = (pulled[a.anchor] || 0) + 1; });
+    const avgMargin = js => js.reduce((s, j) => s + P[j].marginPct, 0) / js.length;
+    const cats = js => new Set(js.map(j => P[j].category)).size;
+    const bj = r.before.map(b => b.i), aj = rows.map(a => a.i);
+    return { kept, pulled, fromList, marginBefore: avgMargin(bj), marginAfter: avgMargin(aj), catsBefore: cats(bj), catsAfter: cats(aj) };
+  }
+
+  function whyBar(a, scale) {
+    const s = el("svg:svg", { viewBox: "0 0 60 14", width: 60, height: 14, class: "why", "aria-hidden": "true" });
+    const x0 = 30, k = 28 / scale;
+    const bar = (v, y, cls) => {
+      const w = Math.max(1, Math.min(29, Math.abs(v) * k));
+      return el("svg:rect", { x: v >= 0 ? x0 : x0 - w, y, width: w, height: 5, rx: 1, class: cls });
+    };
+    s.append(el("svg:line", { x1: x0, x2: x0, y1: 0, y2: 14, class: "zero" }),
+             bar(a.list, 1.5, "b-list"), bar(a.session, 7.5, `b-${a.anchor}`));
+    return s;
+  }
+
+  function renderRerankResult(r) {
+    const rows = rowsOf(r);
+    const sm = rowSummary(r, rows);
+    const used = r.anchors.map(anchorWord).join(" + ");
+    const parts = [`${r.system}, ${used}, weight ${r.lam.toFixed(2)}${RR.chain ? ", knobs applied afterwards" : ""}. Kept ${sm.kept} of ${r.before.length}`];
+    for (const [a, n] of Object.entries(sm.pulled)) parts.push(`${n} new from ${anchorWord(a)}`);
+    let text = parts.join(", ") + `. Margin ${pct(sm.marginBefore)} → ${pct(sm.marginAfter)}, categories ${sm.catsBefore} → ${sm.catsAfter}.`;
+    if (RR.chain) {
+      const moved = rows.filter((a, n) => a.mid !== n + 1).length;
+      text += ` Applying knobs changed ${moved} of ${rows.length} slots.`;
+    }
+
+    const legend = el("div", { class: "why-legend" });
+    const key = (cls, label) => { const s = el("span"); s.append(el("i", { class: `k ${cls}` }), label); return s; };
+    legend.append(key("b-list", "list score"));
+    r.anchors.forEach(a => legend.append(key(`b-${a}`, `${anchorWord(a)} pull`)));
+    legend.append(el("span", {}, "right of the line helps, left hurts"));
+
+    const scale = Math.max(0.5, ...rows.flatMap(a => [Math.abs(a.list), Math.abs(a.session)]));
+    const cols = el("div", { class: "nn-cols rr-cols", "aria-hidden": "true" });
+    cols.append(el("span", {}, "#"), el("span", {}, "Product"), el("span", {}, "Was"), el("span", {}, "Why"));
+    const list = el("ol", { class: "nn rr" });
+    rows.forEach((a, n) => {
+      const j = a.i, p = P[j];
+      const isNew = !sm.fromList.has(a.sku);
+      const why = `list ${signed(a.list)}, ${anchorWord(a.anchor)} ${signed(a.session)}, total ${signed(a.list + a.session)}`;
+      const stage = RR.chain ? (a.mid ? `, #${a.mid} after re-rank` : ", added when applying knobs") : "";
+      const was = a.pinned ? "pinned" : isNew ? "new" : `#${a.was}`;
+      const b = el("button", { type: "button", "aria-label": `${p.name}, ${was === "new" ? "new, pulled in by " + anchorWord(a.anchor) : was}${stage}. ${why}` });
+      const name = el("span", { class: "nn-name" });
+      const d = el("i", { class: "swatch" }); d.style.background = catVar(p.category);
+      name.append(d, el("span", { class: "t", title: `${p.name} · ${why}${stage}` }, p.name));
+      b.append(el("span", { class: "rank" }, n + 1), name, el("span", { class: isNew ? "moved new" : "moved" }, was), whyBar(a, scale));
+      b.addEventListener("click", () => select(j));
+      b.addEventListener("mouseenter", () => showTip(j));
+      b.addEventListener("mouseleave", () => { $("tip").hidden = true; });
+      const li = el("li"); li.append(b); list.append(li);
+    });
+
+    const lists = [["The list before re-ranking", r.before]];
+    if (RR.chain) lists.push(["The re-ranked list before applying knobs", r.after]);
+    const extra = lists.map(([title, items]) => {
+      const det = el("details");
+      det.append(el("summary", {}, title));
+      const ol = el("ol");
+      items.forEach(b => ol.append(el("li", {}, P[b.i].name)));
+      det.append(ol);
+      return det;
+    });
+    return [el("p", { class: "materials" }, text), legend, cols, list, ...extra];
+  }
+
+  function rerankRequest(system) {
+    // re-rank the first pass (step 2) with the session (step 1)
+    return { system, lam: RR.lam, clicks: sessionClicks.map(i => P[i].sku), views: sessionViews.map(i => P[i].sku),
+             queries: [...sessionTerms], order: FL.first.order };
+  }
+
+  async function postJSON(url, body) {
+    const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const out = await r.json();
+    if (!r.ok) throw new Error(out.error || `Server returned ${r.status}`);
+    return out;
+  }
+
+  async function runRerank() {
+    RR.busy = true; RR.msg = ""; RR.err = false; renderFlow();
+    try {
+      RR.result = await postJSON("/api/rerank", rerankRequest(RR.system));
+    } catch (err) {
+      RR.result = null; RR.msg = `Couldn't re-rank: ${err.message}`; RR.err = true;
+    } finally {
+      RR.busy = false; rerender();
+    }
+  }
+
+  async function compareAll() {
+    RR.comparing = true; RR.msg = ""; RR.err = false; renderFlow();
+    try {
+      const res = {};
+      for (const s of RR.opts.systems) res[s.key] = await postJSON("/api/rerank", rerankRequest(s.key));
+      const desc = [...sessionTerms.map(t => `searched "${t}"`), ...sessionClicks.map(i => `clicked ${shortName(P[i].name)}`),
+                    ...sessionViews.map(i => `viewed ${shortName(P[i].name)}`)].join(", ");
+      RR.compare = { res, session: desc,
+                     source: sourceLabel(RR.source) };
+      if (!RR.result || RR.result.system !== res[RR.system].system) RR.result = res[RR.system];
+    } catch (err) {
+      RR.msg = `Couldn't compare: ${err.message}`; RR.err = true;
+    } finally {
+      RR.comparing = false; rerender();
+      if (RR.compare) $("rr-compare").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function renderCompare() {
+    const sec = $("rr-compare");
+    if (!RR.compare) { sec.hidden = true; sec.replaceChildren(); return; }
+    sec.hidden = false;
+    const keys = Object.keys(RR.compare.res);
+    const lists = keys.map(k => rowsOf(RR.compare.res[k]));
+    const count = new Map();
+    lists.forEach(l => l.forEach(a => count.set(a.sku, (count.get(a.sku) || 0) + 1)));
+    const everywhere = [...count.values()].filter(c => c === keys.length).length;
+
+    const head = el("div", { class: "cmp-head" });
+    const close = el("button", { type: "button", class: "pill" }, "Close");
+    close.addEventListener("click", () => { RR.compare = null; renderCompare(); });
+    head.append(el("h3", {}, "Re-rank systems side by side"), close);
+    const note = el("p", {}, `Session: ${RR.compare.session}. Re-ranking ${RR.compare.source}, weight ${RR.lam.toFixed(2)}${RR.chain ? ", knobs applied afterwards" : ""}. `
+      + `${everywhere} of 10 products appear in every list; outlined rows appear in only one system's list.`);
+
+    const grid = el("div", { class: "cmp-grid" });
+    keys.forEach((k, c) => {
+      const r = RR.compare.res[k], rows = lists[c], sm = rowSummary(r, rows);
+      const col = el("div", { class: "cmp-col" });
+      col.append(el("h4", {}, r.system));
+      const ol = el("ol");
+      rows.forEach(a => {
+        const li = el("li", { class: count.get(a.sku) === 1 ? "unique" : "" });
+        const b = el("button", { type: "button", title: P[a.i].name });
+        const sw = el("i", { class: "swatch" }); sw.style.background = catVar(P[a.i].category);
+        const isNew = !sm.fromList.has(a.sku);
+        b.append(sw, el("span", { class: "t" }, shortName(P[a.i].name)),
+                 el("span", { class: isNew ? "moved new" : "moved" }, a.pinned ? "pin" : isNew ? anchorWord(a.anchor) : `#${a.was}`));
+        b.addEventListener("click", () => select(a.i));
+        li.append(b); ol.append(li);
+      });
+      const pulled = Object.entries(sm.pulled).map(([a, n]) => `${n} ${anchorWord(a)}`).join(", ") || "none";
+      col.append(ol, el("p", {}, `Kept ${sm.kept}/10 · new: ${pulled} · margin ${pct(sm.marginAfter)} · ${sm.catsAfter} categories`));
+      grid.append(col);
+    });
+    sec.replaceChildren(head, note, grid);
+  }
+
+
+  // ---- example sessions (step 1) ----
+  const SCENARIOS = [
+    { name: "Summer wedding guest", clicks: ["CLO-003", "CLO-004"], views: ["CLO-009", "CLO-007"], terms: ["summer wedding guest outfit"] },
+    { name: "Placebo (unrelated)", clicks: ["HOM-011", "BAG-013"], views: ["CSH-020"], terms: ["home office storage"] },
+    { name: "Cold-weather gift", clicks: ["CSH-012", "CSH-020"], views: ["CLO-016"], terms: ["cozy gift for mom"] },
+    { name: "New apartment", clicks: ["HOM-011", "HOM-002"], views: ["HOM-020"], terms: ["furnish a bedroom"] },
+    { name: "Silver jewelry", clicks: ["JWL-008", "JWL-013"], views: [], terms: ["silver jewelry with a colored stone"] },
+  ].filter(s => [...s.clicks, ...s.views].every(sku => skuIdx.has(sku)));
+
+  function loadScenario(sc) {
+    sessionClicks.length = 0; sessionViews.length = 0; sessionTerms.length = 0;
+    sc.clicks.forEach(sku => sessionClicks.push(skuIdx.get(sku)));
+    sc.views.forEach(sku => sessionViews.push(skuIdx.get(sku)));
+    sc.terms.forEach(t => sessionTerms.push(t));
+    RR.sessMsg = ""; FL.first = null;
+    rrChanged();
+  }
+
+  // ---- new-product sandbox ----
+  const SB = { name: "", desc: "", result: null, busy: false, msg: "" };
+  const SLOT_LABELS = { department: "Department", type: "Type", material: "Material", occasion: "Occasion", audience: "Audience", price: "Price" };
+
+  function sandboxBody() {
+    const name = el("input", { type: "text", class: "sb-in", maxlength: 200, placeholder: "Name, e.g. Cashmere Travel Wrap", "aria-label": "New product name" });
+    name.value = SB.name;
+    name.addEventListener("input", e => { SB.name = e.target.value; });
+    const desc = el("textarea", { class: "sb-in", rows: 3, maxlength: 1000, "aria-label": "New product description",
+      placeholder: "Description, written like the catalog, e.g. An oversized cashmere wrap with leather trim that doubles as a blanket on long flights." });
+    desc.value = SB.desc;
+    desc.addEventListener("input", e => { SB.desc = e.target.value; });
+    const btn = el("button", { type: "button", class: "primary" }, SB.busy ? "Placing…" : "Place it");
+    btn.disabled = SB.busy;
+    btn.addEventListener("click", placeProduct);
+    const run = el("div", { class: "action-run" });
+    run.append(btn);
+    if (SB.msg) run.append(el("p", { class: "err" }, SB.msg));
+    if (SB.result) {
+      const clear = el("button", { type: "button", class: "pill" }, "Remove from map");
+      clear.addEventListener("click", () => { SB.result = null; renderDetail(); paintSelection(); });
+      run.append(clear);
+    }
+    const out = [el("p", { class: "materials" },
+      "Describe a product that isn't in the catalog. It's embedded like the others and placed in every space; the set model names its categories, and if your session has a search, you'll see where it would rank."),
+      name, desc, run];
+    if (SB.result) out.push(...renderSandboxResult(SB.result));
+    return out;
+  }
+
+  async function placeProduct() {
+    if (!SB.name.trim() && !SB.desc.trim()) { SB.msg = "Give it a name or a description."; renderDetail(); return; }
+    SB.busy = true; SB.msg = ""; renderDetail();
+    try {
+      SB.result = await postJSON("/api/new-product", { name: SB.name, description: SB.desc, query: latestTerm() });
+    } catch (err) {
+      SB.msg = `Couldn't place it: ${err.message}`;
+    } finally {
+      SB.busy = false; renderDetail(); paintSelection();
+    }
+  }
+
+  function renderSandboxResult(r) {
+    const out = [];
+    if (Object.keys(r.names).length) {
+      const names = el("div", { class: "sb-names" });
+      for (const [slot, top] of Object.entries(r.names)) {
+        const [v, s] = top[0];
+        const chip = el("span", { class: "sb-name", title: top.map(([a, b]) => `${a} ${b.toFixed(2)}`).join(" · ") });
+        chip.append(el("small", {}, SLOT_LABELS[slot] || slot), el("b", {}, v));
+        names.append(chip);
+      }
+      out.push(el("p", { class: "materials" }, "The set model names it (hover for runners-up):"), names);
+    }
+    const m = r.models[state.model];
+    out.push(el("p", { class: "materials" }, `Star on the map. Nearest products in ${MODEL_NAMES[state.model] || state.model}:`));
+    const ol = el("ol", { class: "nn" });
+    m.neighbors.forEach((j, n) => {
+      const b = el("button", { type: "button" });
+      const name = el("span", { class: "nn-name" });
+      const d = el("i", { class: "swatch" }); d.style.background = catVar(P[j].category);
+      name.append(d, el("span", { class: "t" }, P[j].name));
+      b.append(el("span", { class: "rank" }, n + 1), name, el("span", { class: "cos" }, m.sims[n].toFixed(2)), el("span"));
+      b.addEventListener("click", () => select(j));
+      const li = el("li"); li.append(b); ol.append(li);
+    });
+    out.push(ol);
+    const table = el("table", { class: "compare" });
+    const hr = el("tr");
+    hr.append(el("th", {}, "Encoder"), el("th", {}, "Nearest"), el("th", {}, r.query ? "Rank for search" : ""));
+    const thead = el("thead"); thead.append(hr);
+    const tbody = el("tbody");
+    for (const [key, v] of Object.entries(r.models)) {
+      const tr = el("tr");
+      tr.append(el("td", {}, MODEL_NAMES[key] || key), el("td", { title: P[v.neighbors[0]].name }, clip(shortName(P[v.neighbors[0]].name), 22)),
+                el("td", {}, v.query ? `#${v.query.rank} of ${v.query.of}` : ""));
+      tbody.append(tr);
+    }
+    table.append(thead, tbody);
+    out.push(table);
+    if (r.query) out.push(el("p", { class: "materials" }, `Rank for "${clip(r.query, 40)}": where the new product would land among all ${N + 1} by cosine to the search.`));
+    return out;
+  }
+
+  // ---- map overlays for actions: session anchors and the sandbox product ----
+  function centroid(pts) {
+    if (!pts.length) return null;
+    return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length];
+  }
+
+  function actionOverlays() {
+    const kids = [];
+    const r = RR.result;
+    if (r) {
+      const clickPt = centroid([...sessionClicks, ...sessionViews].map(pos));
+      // search anchor: the centroid of the terms that were embedded as queries (typed-only terms have no map position)
+      const queryPt = centroid(sessionTerms.map(t => queries.find(q => q.text.toLowerCase() === t.toLowerCase()))
+        .filter(Boolean).map(q => toXY(q.models[state.model].xy)));
+      const at = { click: clickPt, query: queryPt, session: centroid([clickPt, queryPt].filter(Boolean)) };
+      const before = new Set(r.before.map(b => b.sku));
+      for (const a of rowsOf(r)) {
+        if (before.has(a.sku) || !at[a.anchor]) continue;
+        const [x, y] = pos(a.i), [ax, ay] = at[a.anchor];
+        kids.push(el("svg:line", { class: `alink a-${a.anchor}`, x1: ax, y1: ay, x2: x, y2: y }));
+      }
+      for (const name of r.anchors) {
+        if (!at[name]) continue;
+        const [x, y] = at[name];
+        const g = el("svg:g", { class: `amark a-${name}` });
+        g.style.transform = `translate(${x}px, ${y}px)`;
+        g.append(el("svg:circle", { r: 15 }), el("svg:text", { y: -22, "text-anchor": "middle" }, anchorWord(name)));
+        g.append(el("svg:title", {}, `${anchorWord(name)} anchor (approximate position on this map)`));
+        kids.push(g);
+      }
+    }
+    if (SB.result) {
+      const [x, y] = toXY(SB.result.models[state.model].xy);
+      for (const j of SB.result.models[state.model].neighbors) {
+        const [nx, ny] = pos(j);
+        kids.push(el("svg:line", { class: "nlink", x1: x, y1: y, x2: nx, y2: ny }));
+      }
+      const pts = [];
+      for (let k = 0; k < 10; k++) {
+        const rad = k % 2 ? 7 : 16, t = Math.PI / 5 * k - Math.PI / 2;
+        pts.push(`${(rad * Math.cos(t)).toFixed(1)},${(rad * Math.sin(t)).toFixed(1)}`);
+      }
+      const g = el("svg:g", { class: "newmark" });
+      g.style.transform = `translate(${x}px, ${y}px)`;
+      const right = x < W * 0.6;
+      g.append(el("svg:polygon", { points: pts.join(" ") }),
+               el("svg:text", { x: right ? 22 : -22, y: 8, "text-anchor": right ? "start" : "end" }, `new: ${clip(SB.result.name, 28)}`));
+      kids.push(g);
+    }
+    return kids;
+  }
+
+  // ---- category matrix ----
+  function renderMatrix() {
+    const cs = M().catSim;
+    const flat = cs.flat(); const lo = Math.min(...flat), hi = Math.max(...flat);
+    const thead = el("thead"); const hr = el("tr"); hr.append(el("th"));
+    D.categories.forEach(c => hr.append(el("th", {}, c.label))); thead.append(hr);
+    const tbody = el("tbody");
+    cs.forEach((r, a) => {
+      const tr = el("tr"); tr.append(el("th", {}, D.categories[a].label));
+      r.forEach((v, b) => {
+        const t = Math.round(((v - lo) / (hi - lo)) * 85);
+        const td = el("td", { class: a === b ? "diag-cell" : "" }, v.toFixed(3));
+        td.style.background = `color-mix(in oklab, var(--accent) ${t}%, var(--bg))`;
+        td.style.color = t > 55 ? "var(--surface)" : "var(--ink)";
+        tr.append(td);
+      });
+      tbody.append(tr);
+    });
+    $("matrix").replaceChildren(thead, tbody);
+  }
+
+  // ---- silhouette chart ----
+  function renderSil() {
+    const m = M(); const s = $("sil");
+    const ks = Object.keys(m.silhouette).map(Number);
+    const vals = ks.map(k => m.silhouette[k]);
+    const max = 0.25, x0 = 34, y0 = 140, w = 380, h = 120, bw = w / ks.length;
+    const kids = [];
+    [0, 0.1, 0.2].forEach(v => {
+      const y = y0 - (v / max) * h;
+      kids.push(el("svg:line", { class: "grid", x1: x0, x2: x0 + w, y1: y, y2: y }));
+      kids.push(el("svg:text", { x: x0 - 6, y: y + 4, "text-anchor": "end" }, v.toFixed(1)));
+    });
+    ks.forEach((k, idx) => {
+      const v = Math.max(0, vals[idx]); const bh = (v / max) * h;
+      const cls = k === m.bestK ? "b best" : k === 5 ? "b five" : "b";
+      kids.push(el("svg:rect", { class: cls, x: x0 + idx * bw + 4, y: y0 - bh, width: bw - 8, height: bh, rx: 2 }));
+      kids.push(el("svg:text", { x: x0 + idx * bw + bw / 2, y: y0 + 16, "text-anchor": "middle" }, k));
+      if (k === m.bestK) kids.push(el("svg:text", { x: x0 + idx * bw + bw / 2, y: y0 - bh - 6, "text-anchor": "middle" }, vals[idx].toFixed(3)));
+    });
+    s.replaceChildren(...kids);
+  }
+
+  function select(i) {
+    state.selected = i; state.active = null; save();
+    if (state.color === "similarity") paintDots();
+    refreshRank(); paintSelection(); renderDetail(); renderHistory();
+  }
+
+  function activate(q) {
+    state.active = q;
+    if (state.color === "similarity") paintDots();
+    refreshRank(); paintSelection(); renderDetail(); renderHistory();
+  }
+
+  function render() {
+    for (const b of $("model-seg").children) b.setAttribute("aria-pressed", b.dataset.value === state.model);
+    for (const b of $("color-seg").children) b.setAttribute("aria-pressed", b.dataset.value === state.color);
+    refreshRank(); renderKnobs(); paintDots(); paintSelection(); renderLegend(); renderStats(); renderDetail(); renderFlow(); renderMatrix(); renderSil(); renderHistory();
+  }
+  $("n-products").textContent = N;
+  render();
+})();
+</script>

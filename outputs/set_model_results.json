@@ -1,0 +1,392 @@
+{
+  "completion_held": {
+    "MPNet (raw)": {
+      "header P@5": 0.415,
+      "header R@10": 0.587,
+      "header mAP": 0.494,
+      "header+2 P@5": 0.333,
+      "header+2 R@10": 0.614,
+      "header+2 mAP": 0.478,
+      "query P@5": 0.405,
+      "query R@10": 0.574,
+      "query mAP": 0.481
+    },
+    "Skip-gram tokens": {
+      "header P@5": 0.513,
+      "header R@10": 0.778,
+      "header mAP": 0.614,
+      "header+2 P@5": 0.426,
+      "header+2 R@10": 0.801,
+      "header+2 mAP": 0.659
+    },
+    "Adapter only (item only)": {
+      "header P@5": 0.559,
+      "header R@10": 0.73,
+      "header mAP": 0.624,
+      "header+2 P@5": 0.513,
+      "header+2 R@10": 0.918,
+      "header+2 mAP": 0.9,
+      "query P@5": 0.523,
+      "query R@10": 0.683,
+      "query mAP": 0.619
+    },
+    "Adapter only (item + header)": {
+      "header P@5": 0.697,
+      "header R@10": 0.855,
+      "header mAP": 0.836,
+      "header+2 P@5": 0.544,
+      "header+2 R@10": 0.921,
+      "header+2 mAP": 0.916,
+      "query P@5": 0.662,
+      "query R@10": 0.84,
+      "query mAP": 0.793
+    },
+    "Set transformer, item only": {
+      "header P@5": 0.744,
+      "header R@10": 0.884,
+      "header mAP": 0.896,
+      "header+2 P@5": 0.497,
+      "header+2 R@10": 0.902,
+      "header+2 mAP": 0.907,
+      "query P@5": 0.733,
+      "query R@10": 0.876,
+      "query mAP": 0.878
+    },
+    "Set transformer, item + header": {
+      "header P@5": 0.728,
+      "header R@10": 0.888,
+      "header mAP": 0.891,
+      "header+2 P@5": 0.503,
+      "header+2 R@10": 0.912,
+      "header+2 mAP": 0.885,
+      "query P@5": 0.713,
+      "query R@10": 0.861,
+      "query mAP": 0.867
+    },
+    "Deep Sets, item + header": {
+      "header P@5": 0.626,
+      "header R@10": 0.802,
+      "header mAP": 0.8,
+      "header+2 P@5": 0.451,
+      "header+2 R@10": 0.888,
+      "header+2 mAP": 0.832,
+      "query P@5": 0.641,
+      "query R@10": 0.773,
+      "query mAP": 0.805
+    }
+  },
+  "completion_train": {
+    "MPNet (raw)": {
+      "header P@5": 0.412,
+      "header R@10": 0.478,
+      "header mAP": 0.44,
+      "header+2 P@5": 0.353,
+      "header+2 R@10": 0.577,
+      "header+2 mAP": 0.476,
+      "query P@5": 0.419,
+      "query R@10": 0.506,
+      "query mAP": 0.451
+    },
+    "Set transformer, item + header": {
+      "header P@5": 0.877,
+      "header R@10": 0.912,
+      "header mAP": 1.0,
+      "header+2 P@5": 0.656,
+      "header+2 R@10": 0.928,
+      "header+2 mAP": 1.0,
+      "query P@5": 0.877,
+      "query R@10": 0.912,
+      "query mAP": 1.0
+    }
+  },
+  "naming": {
+    "MPNet (raw)": {
+      "audience": 0.3,
+      "all": 0.618,
+      "material": 0.812,
+      "department": 0.808,
+      "occasion": 0.389,
+      "price": 0.5,
+      "type": 0.615
+    },
+    "Skip-gram tokens": {
+      "audience": 0.9,
+      "all": 0.831,
+      "material": 1.0,
+      "department": 1.0,
+      "occasion": 0.389,
+      "price": 0.5,
+      "type": 1.0
+    },
+    "Adapter only (item only)": {
+      "audience": 0.5,
+      "all": 0.775,
+      "material": 0.688,
+      "department": 1.0,
+      "occasion": 0.667,
+      "price": 0.667,
+      "type": 0.846
+    },
+    "Adapter only (item + header)": {
+      "audience": 1.0,
+      "all": 0.921,
+      "material": 1.0,
+      "department": 1.0,
+      "occasion": 0.722,
+      "price": 0.667,
+      "type": 1.0
+    },
+    "Set transformer, item + header": {
+      "audience": 1.0,
+      "all": 0.978,
+      "material": 1.0,
+      "department": 1.0,
+      "occasion": 1.0,
+      "price": 0.667,
+      "type": 1.0
+    },
+    "Deep Sets, item + header": {
+      "audience": 1.0,
+      "all": 0.955,
+      "material": 1.0,
+      "department": 1.0,
+      "occasion": 0.944,
+      "price": 0.5,
+      "type": 1.0
+    }
+  },
+  "space": {
+    "MPNet (raw)": {
+      "department": 0.798,
+      "type": 0.432,
+      "material": 0.585,
+      "audience": 0.621,
+      "occasion": 0.53,
+      "price": 0.445,
+      "cos mean": 0.365
+    },
+    "Skip-gram item vectors": {
+      "department": 0.989,
+      "type": 0.504,
+      "material": 0.704,
+      "audience": 0.749,
+      "occasion": 0.792,
+      "price": 0.721,
+      "cos mean": 0.267
+    },
+    "Adapter (item only)": {
+      "department": 0.962,
+      "type": 0.6,
+      "material": 0.715,
+      "audience": 0.796,
+      "occasion": 0.802,
+      "price": 0.715,
+      "cos mean": -0.006
+    },
+    "Adapter (item + header)": {
+      "department": 0.97,
+      "type": 0.632,
+      "material": 0.719,
+      "audience": 0.806,
+      "occasion": 0.766,
+      "price": 0.702,
+      "cos mean": -0.003
+    },
+    "Adapter (Deep Sets, item + header)": {
+      "department": 0.964,
+      "type": 0.615,
+      "material": 0.708,
+      "audience": 0.789,
+      "occasion": 0.781,
+      "price": 0.715,
+      "cos mean": -0.001
+    }
+  },
+  "free_text": [
+    {
+      "query": "cozy gift for mom",
+      "MPNet (raw)": [
+        "100% European Linen Quilt",
+        "Washable Stretch Silk Button-Down Shirt",
+        "Mongolian Cashmere Ribbed Beanie",
+        "100% European Linen Duvet Cover Set",
+        "Down Alternative Comforter"
+      ],
+      "Adapter only": [
+        "Mongolian Cashmere Jogger Pants",
+        "14K Gold Huggie Hoop Earrings",
+        "Men's Mongolian Cashmere Hoodie",
+        "Washable Silk Pajama Set",
+        "14K Gold Bead Bracelet"
+      ],
+      "Set transformer": [
+        "Men's Mongolian Cashmere Hoodie",
+        "Men's Mongolian Cashmere V-Neck Sweater",
+        "Men's Mongolian Cashmere Turtleneck Sweater",
+        "Mongolian Cashmere Jogger Pants",
+        "Mongolian Cashmere Oversized Boyfriend Sweater"
+      ]
+    },
+    {
+      "query": "something to wear to a wedding",
+      "MPNet (raw)": [
+        "Washable Stretch Silk Button-Down Shirt",
+        "Mongolian Cashmere Cropped Polo Sweater",
+        "Mongolian Cashmere Turtleneck Sweater",
+        "Men's Mongolian Cashmere Shawl Collar Cardigan",
+        "Washable Silk Pajama Set"
+      ],
+      "Adapter only": [
+        "Lab Grown Diamond Eternity Band",
+        "14K Gold Oval Signet Ring",
+        "Freshwater Pearl Stud Earrings",
+        "Freshwater Pearl Drop Earrings",
+        "Freshwater Pearl Strand Necklace"
+      ],
+      "Set transformer": [
+        "Freshwater Pearl Strand Necklace",
+        "100% Leather Moto Jacket",
+        "14K Gold Initial Pendant Necklace",
+        "Lab Grown Diamond Eternity Band",
+        "14K Gold Oval Signet Ring"
+      ]
+    },
+    {
+      "query": "warm sweater for him to wear to the office",
+      "MPNet (raw)": [
+        "Mongolian Cashmere Sweater Vest",
+        "Men's Mongolian Cashmere Hoodie",
+        "Mongolian Cashmere Ribbed Beanie",
+        "Men's Mongolian Cashmere Shawl Collar Cardigan",
+        "Mongolian Cashmere Oversized Boyfriend Sweater"
+      ],
+      "Adapter only": [
+        "Men's Mongolian Cashmere Turtleneck Sweater",
+        "Men's Mongolian Cashmere V-Neck Sweater",
+        "Mongolian Cashmere Sweater Vest",
+        "Mongolian Cashmere Turtleneck Sweater",
+        "Men's Mongolian Cashmere Crewneck Sweater"
+      ],
+      "Set transformer": [
+        "Men's Mongolian Cashmere V-Neck Sweater",
+        "Men's Mongolian Cashmere Turtleneck Sweater",
+        "Mongolian Cashmere Ribbed Beanie",
+        "Organic Cotton Waffle Knit Blanket",
+        "Men's Mongolian Cashmere Quarter Zip Sweater"
+      ]
+    },
+    {
+      "query": "summer vacation essentials",
+      "MPNet (raw)": [
+        "Organic Cotton Canvas Tote",
+        "Italian Leather Everyday Backpack",
+        "Italian Leather Laptop Briefcase",
+        "Italian Leather Weekender Duffle Bag",
+        "Italian Leather Bucket Bag"
+      ],
+      "Adapter only": [
+        "Bamboo Lyocell Sheet Set",
+        "Recycled Nylon Packable Travel Tote",
+        "Handwoven Straw Market Tote",
+        "Organic Cotton Canvas Tote",
+        "Recycled Nylon Square Neck One-Piece Swimsuit"
+      ],
+      "Set transformer": [
+        "Recycled Nylon Packable Travel Tote",
+        "Responsible Down Puffer Jacket",
+        "Italian Leather Dopp Kit",
+        "Recycled Nylon Square Neck One-Piece Swimsuit",
+        "Bamboo Lyocell Sheet Set"
+      ]
+    },
+    {
+      "query": "gold jewelry under $100",
+      "MPNet (raw)": [
+        "14K Gold Bead Bracelet",
+        "Freshwater Pearl Strand Necklace",
+        "14K Gold Paperclip Chain Necklace",
+        "Lab Grown Diamond Tennis Bracelet",
+        "Men's Stainless Steel ID Bracelet"
+      ],
+      "Adapter only": [
+        "Freshwater Pearl Drop Earrings",
+        "Freshwater Pearl Stud Earrings",
+        "Lab Grown Diamond Stud Earrings",
+        "Freshwater Pearl Strand Necklace",
+        "Lab Grown Diamond Eternity Band"
+      ],
+      "Set transformer": [
+        "Freshwater Pearl Drop Earrings",
+        "Freshwater Pearl Stud Earrings",
+        "Freshwater Pearl Strand Necklace",
+        "14K Gold Initial Pendant Necklace",
+        "14K Gold Huggie Hoop Earrings"
+      ]
+    },
+    {
+      "query": "furnish a bedroom",
+      "MPNet (raw)": [
+        "Performance Linen Upholstered Platform Bed",
+        "Solid Wood Two-Drawer Nightstand",
+        "Solid Oak Bed Frame",
+        "Solid Oak Dining Table",
+        "100% European Linen Duvet Cover Set"
+      ],
+      "Adapter only": [
+        "Bamboo Lyocell Sheet Set",
+        "Freshwater Pearl Stud Earrings",
+        "Organic Percale Sheet Set",
+        "Freshwater Pearl Drop Earrings",
+        "Organic Sateen Sheet Set"
+      ],
+      "Set transformer": [
+        "100% European Linen Wide Leg Pants",
+        "Handwoven Straw Market Tote",
+        "Stainless Steel Everyday Hoop Earrings",
+        "Bamboo Lyocell Sheet Set",
+        "Organic Cotton Canvas Tote"
+      ]
+    }
+  ],
+  "held": [
+    "Home Linen",
+    "Home Organic Cotton",
+    "Unisex Leather",
+    "Unisex Organic Cotton",
+    "Women Diamond",
+    "Women Pearl",
+    "Bags Unisex",
+    "Bags Work",
+    "Bags $150 to $500",
+    "Bags Crossbody & Belt Bags Gift",
+    "Bags Shoulder Bags Women",
+    "Bags Totes",
+    "Bags Work & Travel Travel",
+    "Cashmere Sweaters Lounge & Sleep",
+    "Cashmere Sweaters Work",
+    "Cashmere Sweaters Under $50",
+    "Cashmere Sweaters Cold-Weather Accessories Gift",
+    "Cashmere Sweaters Sweaters Cold Weather",
+    "Furniture & Bed Wood",
+    "Furniture & Bed Cold Weather",
+    "Furniture & Bed $50 to $150",
+    "Furniture & Bed Furniture Wood",
+    "Furniture & Bed Furniture Everyday",
+    "General Clothing Organic Cotton",
+    "General Clothing Under $50",
+    "General Clothing Outerwear Unisex",
+    "General Clothing Tops Men",
+    "Jewelry Diamond",
+    "Jewelry Everyday",
+    "Jewelry Earrings Everyday",
+    "Jewelry Necklaces",
+    "Jewelry Necklaces Gold",
+    "Cashmere Gift",
+    "Cashmere Lounge & Sleep",
+    "Leather Everyday",
+    "Sterling Silver Everyday",
+    "Wood Everyday",
+    "Cold Weather Under $50",
+    "Everyday $150 to $500"
+  ]
+}
